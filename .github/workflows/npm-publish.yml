@@ -1,0 +1,16 @@
+name: npm-publish
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  npm-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: publish with latest tag
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_AUTH_TOKEN }}
