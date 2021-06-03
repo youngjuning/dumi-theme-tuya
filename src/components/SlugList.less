@@ -10,7 +10,13 @@ ul[role='slug-list'] {
 
   li {
     > a.active {
-      color: darken(@c-primary, 2%);
+      color: #346ae5;
+      &::before {
+        background: #346ae5;
+      }
+    }
+    > a:hover {
+      color: #346ae5;
     }
 
     &[data-depth='3'] {
