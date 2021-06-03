@@ -1,0 +1,151 @@
+@import (reference) '../style/variables.less';
+
+.@{prefix}-search {
+  margin-left: 20px;
+  padding-left: 16px;
+  position: relative;
+  display: inline-block;
+
+  &::before {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 1px;
+    height: 34px;
+    top: 50%;
+    margin-top: -17px;
+    background-color: #30303030;
+    content: '';
+    display: block;
+  }
+
+  &[data-is-home='false'] {
+    &::before {
+      background-color: #303030;
+    }
+  }
+
+  svg {
+    position: absolute;
+    top: 50%;
+    width: 24px;
+    height: 24px;
+    margin-top: -12px;
+    left: 16px;
+    pointer-events: none;
+  }
+
+  &-input {
+    width: 200px;
+    height: 32px;
+    padding: 0 8px 0 32px;
+    font-size: 14px;
+    border: 0;
+    outline: none;
+    transition: all 0.2s;
+    appearance: none;
+    color: @c-heading;
+    background-color: inherit;
+  }
+
+  &[data-is-home='false'] {
+    .@{prefix}-search-input {
+      color: #fff;
+    }
+  }
+
+  > ul {
+    list-style: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 10;
+    margin: 8px 0 0;
+    min-width: 280px;
+    max-width: 400px;
+    padding: 6px 0;
+    background-color: #fff;
+    border: 1px solid @c-border;
+    border-radius: 1px;
+    box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+
+    &:empty {
+      display: none;
+    }
+
+    li {
+      font-size: 15px;
+
+      a {
+        display: block;
+        padding: 6px 20px;
+        color: @c-secondary;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &:hover {
+          color: @c-primary;
+          background-color: @c-light-bg;
+        }
+      }
+
+      span:first-child {
+        position: relative;
+        display: inline-block;
+        max-width: 50%;
+        padding-right: 26px;
+        vertical-align: -0.37em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        opacity: 0.8;
+
+        &::after {
+          content: '>';
+          position: absolute;
+          top: 50%;
+          right: 6px;
+          opacity: 0.6;
+          transform: translateY(-54%);
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 1024px) {
+    margin-right: -14px;
+    &::before {
+      display: none;
+    }
+    > input:not(:focus) {
+      width: 32px;
+      padding-right: 0;
+      box-shadow: none;
+      cursor: pointer;
+      background-position: right 8px center;
+
+      + ul {
+        transition: 0.1s visibility;
+        visibility: hidden;
+      }
+    }
+  }
+
+  @media @mobile {
+    position: absolute;
+    top: 9px;
+    right: 24px;
+    display: block !important;
+    &::before {
+      display: none;
+    }
+
+    > ul {
+      left: unset;
+      right: 0;
+    }
+  }
+}

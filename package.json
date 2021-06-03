@@ -1,0 +1,48 @@
+{
+  "name": "dumi-theme-tuya",
+  "version": "1.0.1",
+  "description": "The tuya theme of dumi",
+  "files": [
+    "src"
+  ],
+  "sideEffects": [
+    "./**/*.less"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tuya/dumi-theme-tuya"
+  },
+  "homepage": "https://github.com/tuya/dumi-theme-tuya",
+  "bugs": "https://github.com/tuya/dumi-theme-tuya/issues",
+  "authors": [
+    {
+      "name": "洛竹",
+      "email": "youngjuning@aliyun.com",
+      "url": "https://youngjuning.js.org"
+    },
+    {
+      "name": "睦海",
+      "email": "muhai.li@tuya.com"
+    }
+  ],
+  "dependencies": {
+    "prism-react-renderer": "^1.1.1",
+    "prismjs": "^1.21.0",
+    "rc-tabs": "^11.7.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.3",
+    "@testing-library/react": "^10.4.8",
+    "dumi": "1.1.17",
+    "react-test-renderer": "^16.13.1"
+  },
+  "peerDependencies": {
+    "@umijs/preset-dumi": "1.x",
+    "react": "^16.13.1"
+  },
+  "license": "MIT"
+}

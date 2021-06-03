@@ -1,0 +1,357 @@
+@import (reference) '../style/variables.less';
+
+.@{prefix}-menu {
+  @c-primary: #346ae5;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: @s-menu-width;
+  background-color: #f2f5fa;
+  box-sizing: border-box;
+  transition: left 0.3s;
+  user-select: none;
+
+  &[data-hidden] {
+    display: none;
+  }
+
+  @media @mobile {
+    left: -@s-menu-mobile-width;
+    top: @s-mobile-nav-height;
+    display: block !important;
+    width: @s-menu-mobile-width;
+    background-color: #fff;
+
+    &[data-mobile-show] {
+      left: 0;
+    }
+
+    .__dumi-default-locale-select {
+      a {
+        color: #454d64;
+      }
+    }
+  }
+
+  // shadow
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    width: 20px;
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0.03)
+    );
+    pointer-events: none;
+
+    // use border on mobile devices
+    @media @mobile {
+      width: 1px;
+      background: @c-border;
+    }
+  }
+
+  &-header {
+    position: relative;
+    padding-top: 40px;
+    text-align: center;
+    border-bottom: 1px solid @c-border;
+
+    @media @mobile {
+      display: none;
+    }
+
+    .@{prefix}-menu-logo {
+      display: inline-block;
+      width: 66px;
+      height: 65px;
+      background: url(@img-logo) no-repeat 0 / contain;
+    }
+
+    h1 {
+      margin: 10px 0 0;
+      color: @c-heading;
+      font-weight: 500;
+      line-height: 1.40625;
+    }
+
+    p {
+      margin: 0 0 5px;
+      color: lighten(@c-secondary, 10%);
+
+      // badges
+      > object[data^='https://img.shields.io'] {
+        max-height: 20px;
+      }
+
+      + p {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  &-doc-locale {
+    padding: 16px 0;
+    text-align: center;
+    border-bottom: 1px solid @c-border;
+    a {
+      color: #717484;
+    }
+    &:empty {
+      display: none;
+    }
+  }
+
+  &-inner {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    overscroll-behavior: contain;
+
+    // common list styles
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: 16px;
+
+      li {
+        color: @c-text;
+        a,
+        > span {
+          position: relative;
+          display: block;
+          height: 40px;
+          line-height: 40px;
+          padding-right: 24px;
+          color: @c-heading;
+          text-decoration: none;
+          outline: none;
+          transition: color 0.3s, background 0.3s;
+
+          span {
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+
+          &:hover,
+          &.active {
+            color: @c-primary;
+          }
+        }
+
+        &.active a,
+        a.active {
+          &::before {
+            opacity: 1;
+            transform: scale(1) translateX(0);
+          }
+        }
+
+        // level larger, offset larger, font size smaller
+        ul {
+          font-size: 0.9em;
+          padding-left: 1em;
+        }
+      }
+    }
+
+    // 1-level list styles
+    > ul {
+      > li > a {
+        line-height: 2.875;
+
+        &:not([href]) {
+          padding-top: 24px;
+          line-height: 1;
+          font-weight: 500;
+          color: @c-heading !important;
+          background: transparent !important;
+          cursor: default;
+        }
+      }
+
+      > li:first-child > a:not([href]) {
+        padding-top: 0;
+      }
+    }
+
+    // n-level list styles
+    > ul ul {
+      a {
+        color: @c-secondary;
+
+        &.active {
+          color: @c-primary;
+        }
+      }
+    }
+
+    .@{prefix}-menu-mobile-area {
+      display: none;
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+      text-align: center;
+      border-bottom: 1px solid @c-border;
+
+      @media @mobile {
+        display: block;
+      }
+    }
+
+    // mobile nav list
+    .@{prefix}-menu-nav-list {
+      padding: 16px 0;
+
+      > li,
+      > li > a {
+        padding-right: 0;
+        line-height: 2.4;
+
+        ul {
+          padding-left: 0;
+
+          a {
+            padding-right: 0;
+            font-size: 90%;
+          }
+        }
+      }
+    }
+
+    // menu list
+    .@{prefix}-menu-list {
+      padding: 8px 0;
+      margin-bottom: 40px;
+
+      > li > a {
+        @c-active-bg: #e8ecf4;
+
+        padding-left: 28px;
+
+        &.active {
+          background: rgba(52, 106, 229, 0.1);
+          border-radius: 4px;
+        }
+
+        ~ ul {
+          margin-top: 8px;
+          margin-left: 28px;
+        }
+
+        @media @mobile {
+          padding-left: 16px;
+
+          ~ ul {
+            margin-left: 16px;
+          }
+        }
+      }
+    }
+  }
+
+  &[data-mode='site'] {
+    &::after {
+      width: 1px;
+      background: @c-border;
+    }
+
+    .@{prefix}-menu-list {
+      padding: 0;
+
+      .ant-menu {
+        &-root {
+          padding-top: 26px;
+        }
+
+        // 一级菜单
+        > .ant-menu-item {
+          &::after {
+            display: none;
+          }
+          > a {
+            font-size: 18px;
+            color: rgba(0, 0, 0, 0.65);
+            font-size: 14px;
+            font-weight: 300;
+            width: 100%;
+          }
+          &-active {
+            a {
+              color: #346ae5;
+            }
+          }
+          &.ant-menu-item-selected {
+            background-color: rgba(52, 106, 229, 0.1);
+            a {
+              font-weight: 400;
+              color: #346ae5;
+            }
+          }
+        }
+        // 二级菜单
+        .ant-menu-submenu {
+          // 二级菜单标题
+          &-title {
+            font-size: 18px;
+            color: #000;
+          }
+          &-active {
+            .ant-menu-submenu-title {
+              color: #346ae5;
+            }
+          }
+          // 二级菜单下子菜单
+          .ant-menu-sub {
+            background-color: inherit;
+            // 二级菜单下一级菜单
+            > .ant-menu-item {
+              > a {
+                color: rgba(0, 0, 0, 0.65);
+                width: 100%;
+              }
+              &-active {
+                a {
+                  color: #346ae5;
+                }
+              }
+              &.ant-menu-item-selected {
+                a {
+                  color: #346ae5;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    @media @desktop {
+      top: @s-nav-height;
+      width: @s-site-menu-width;
+      background-color: #fff;
+
+      .@{prefix}-menu-nav,
+      .@{prefix}-menu-header {
+        display: none;
+      }
+
+      .@{prefix}-menu-list > li > a {
+        padding-left: 58px;
+
+        ~ ul {
+          margin-left: 58px;
+        }
+      }
+    }
+  }
+}
