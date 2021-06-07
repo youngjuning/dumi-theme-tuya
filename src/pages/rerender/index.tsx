@@ -1,5 +1,7 @@
 import './style.less';
 
+import { context } from 'dumi/theme';
+import { Location } from 'history-with-query';
 import React, { ReactNode, useContext } from 'react';
 
 import Device from '../../components/Device';
@@ -7,19 +9,21 @@ import { CodeContext } from '../../context';
 import { useMeta } from '../../hooks/useMeta';
 import { useThemeConfig } from '../../hooks/useThemeConfig';
 import { transform } from '../../parser';
+import { join } from '../../utils';
 import { classnames } from '../../utils/classnames';
 
 export interface RerenderProps {
   content: ReactNode;
+  location: Location<{}>;
 }
 
-export const Renderer: React.FC<RerenderProps> = ({ content }) => {
+export const Renderer: React.FC<RerenderProps> = ({ content, location }) => {
   const { title, desc, demo } = useMeta();
   const { demoUrl } = useThemeConfig();
+  const { locale } = useContext(context)
 
   const themeCtx = useContext(CodeContext);
   const { themes, currentTheme, update } = themeCtx;
-
   return (
     <div className="__dumi-default-layout-content">
       <div className="__dumi-default-mobile-content">
@@ -65,7 +69,7 @@ export const Renderer: React.FC<RerenderProps> = ({ content }) => {
         {demo && demoUrl && (
           <Device
             className="__dumi-default-mobile-content-device"
-            url={`${demoUrl}/${demo}/${currentTheme}`}
+            url={`${demoUrl}${join(demo, currentTheme)}?locale=${locale}`}
           />
         )}
       </div>

@@ -18,6 +18,7 @@ const Device: FC<IDeviceProps> = ({ url, className = '', title = 'tuya' }) => {
     config: { mode },
   } = useContext(context);
 
+
   // re-render iframe if prefers color changed
   useEffect(() => {
     setRenderKey(Math.random());

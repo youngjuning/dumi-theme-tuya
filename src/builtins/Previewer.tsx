@@ -3,18 +3,8 @@ import './Previewer.less';
 // @ts-ignore
 import { history } from 'dumi';
 import {
-  AnchorLink,
-  context,
-  IPreviewerComponentProps,
-  Link,
-  useCodeSandbox,
-  useCopy,
-  useDemoUrl,
-  useLocaleProps,
-  useMotions,
-  usePrefersColor,
-  useRiddle,
-  useTSPlaygroundUrl,
+    AnchorLink, context, IPreviewerComponentProps, Link, useCodeSandbox, useCopy, useDemoUrl,
+    useLocaleProps, useMotions, usePrefersColor, useRiddle, useTSPlaygroundUrl
 } from 'dumi/theme';
 import Tabs, { TabPane } from 'rc-tabs';
 import React, { useContext, useEffect, useRef, useState } from 'react';

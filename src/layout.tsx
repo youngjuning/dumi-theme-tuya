@@ -11,7 +11,7 @@ import SearchBar from './components/SearchBar';
 import SideMenu from './components/SideMenu';
 import SlugsList from './components/SlugList';
 import { CodeContext, WriteAbleCtx } from './context';
-import { useCondition, useLinkMap } from './hooks';
+import { useCondition, useHandlePostPath, useLinkMap } from './hooks';
 import { Renderer } from './pages';
 import { Home } from './pages/home';
 
@@ -44,6 +44,8 @@ const Layout: React.FC<IRouteComponentProps> = ({ children, location }) => {
         .then(res => setCtxValues({ ...ctxValues, apiData: res.data }));
     }
   }, [ctxValues]);
+
+  useHandlePostPath();
 
   return (
     <CodeContext.Provider
@@ -90,7 +92,11 @@ const Layout: React.FC<IRouteComponentProps> = ({ children, location }) => {
           <SideMenu mobileMenuCollapsed={menuCollapsed} location={location} />
         )}
         {/* 页面渲染 */}
-        {isHome ? <Home content={children} /> : <Renderer content={children} />}
+        {isHome ? (
+          <Home content={children} />
+        ) : (
+          <Renderer location={location} content={children} />
+        )}
       </div>
     </CodeContext.Provider>
   );
