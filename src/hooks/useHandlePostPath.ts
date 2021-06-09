@@ -5,7 +5,7 @@ export const useHandlePostPath = () => {
   const history = useHistory();
   useEffect(() => {
     const handle = (event: MessageEvent<any>) => {
-      const href = event?.data?.href;
+      const href = event?.data?.data;
       if (href) {
         history.push(href);
       }

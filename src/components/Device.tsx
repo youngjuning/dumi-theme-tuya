@@ -8,9 +8,10 @@ interface IDeviceProps {
   className?: string;
   url: string;
   title?: string;
+  forwardRef?: React.MutableRefObject<HTMLIFrameElement>
 }
 
-const Device: FC<IDeviceProps> = ({ url, className = '', title = 'tuya' }) => {
+const Device: FC<IDeviceProps> = ({ url, className = '', title = 'tuya', forwardRef }) => {
   const [renderKey, setRenderKey] = useState(Math.random());
   const [dateTime, setDateTime] = useState(new Date());
   const [color] = usePrefersColor();
@@ -48,7 +49,7 @@ const Device: FC<IDeviceProps> = ({ url, className = '', title = 'tuya' }) => {
           .toString()
           .padStart(2, '0')}`}</span>
       </div>
-      <iframe title="dumi-previewer" src={url} key={renderKey} />
+      <iframe ref={forwardRef} title="dumi-previewer" src={url} key={renderKey} />
       <div className="__dumi-default-device-action">
         <button
           className="__dumi-default-icon"

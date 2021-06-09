@@ -1,16 +1,16 @@
 import './style.less';
 
-import { context } from 'dumi/theme';
 import { Location } from 'history-with-query';
-import React, { ReactNode, useContext } from 'react';
+import React, { ReactNode, useContext, useEffect, useRef } from 'react';
 
 import Device from '../../components/Device';
 import { CodeContext } from '../../context';
 import { useMeta } from '../../hooks/useMeta';
 import { useThemeConfig } from '../../hooks/useThemeConfig';
 import { transform } from '../../parser';
-import { join } from '../../utils';
 import { classnames } from '../../utils/classnames';
+import { join } from '../../utils/join'
+import { context } from 'dumi/theme';
 
 export interface RerenderProps {
   content: ReactNode;
@@ -18,12 +18,24 @@ export interface RerenderProps {
 }
 
 export const Renderer: React.FC<RerenderProps> = ({ content, location }) => {
-  const { title, desc, demo } = useMeta();
+  const { title, desc, demo = 'true' } = useMeta();
   const { demoUrl } = useThemeConfig();
   const { locale } = useContext(context)
 
   const themeCtx = useContext(CodeContext);
   const { themes, currentTheme, update } = themeCtx;
+
+  const ref = useRef<HTMLIFrameElement>()
+  useEffect(() => {
+    const win = ref?.current?.contentWindow
+    if (win) {
+      win.postMessage({
+        method: 'navigate',
+        data: demo
+      }, '*')
+    }
+  }, [demo])
+
   return (
     <div className="__dumi-default-layout-content">
       <div className="__dumi-default-mobile-content">
@@ -68,8 +80,9 @@ export const Renderer: React.FC<RerenderProps> = ({ content, location }) => {
         </article>
         {demo && demoUrl && (
           <Device
+            forwardRef={ref}
             className="__dumi-default-mobile-content-device"
-            url={`${demoUrl}${join(demo, currentTheme)}?locale=${locale}`}
+            url={`${demoUrl}?locale=${locale}#${join(demo, currentTheme)}`}
           />
         )}
       </div>
