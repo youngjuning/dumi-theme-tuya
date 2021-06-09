@@ -18,7 +18,7 @@ export interface RerenderProps {
 }
 
 export const Renderer: React.FC<RerenderProps> = ({ content, location }) => {
-  const { title, desc, demo = 'true' } = useMeta();
+  const { title, desc, demo } = useMeta();
   const { demoUrl } = useThemeConfig();
   const { locale } = useContext(context)
 
