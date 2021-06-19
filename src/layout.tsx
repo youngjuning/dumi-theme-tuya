@@ -36,7 +36,12 @@ const Layout: React.FC<IRouteComponentProps> = ({ children, location }) => {
   });
 
   const linkMap = useLinkMap();
-  const is404 = !(location.pathname in linkMap)
+  const is404 = useMemo(() => {
+    if (location && linkMap) {
+      return !(location.pathname in linkMap)
+    }
+    return false
+  }, [linkMap, linkMap])
 
   useEffect(() => {
     if (ctxValues.apiData === null) {

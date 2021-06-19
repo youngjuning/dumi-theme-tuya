@@ -5,7 +5,7 @@ export const useLinkMap = () => {
   const { menu } = useContext(context);
   const linkMap = useMemo(() => {
     const stack = Array.isArray(menu) ? menu.slice() : [];
-    const map: { [title: string]: any } = {};
+    const map: { [title: string]: any } = stack.length > 0 ? {} : null
     while (stack.length) {
       const current = stack.pop();
       if (Array.isArray(current.children)) {
