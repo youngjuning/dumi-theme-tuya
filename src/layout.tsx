@@ -36,6 +36,7 @@ const Layout: React.FC<IRouteComponentProps> = ({ children, location }) => {
   });
 
   const linkMap = useLinkMap();
+  const is404 = !(location.pathname in linkMap)
 
   useEffect(() => {
     if (ctxValues.apiData === null) {
@@ -84,15 +85,15 @@ const Layout: React.FC<IRouteComponentProps> = ({ children, location }) => {
             ev.stopPropagation();
           }}
         />
-        {showSlugs && (
+        {(showSlugs && !is404) && (
           <SlugsList slugs={meta.slugs} className="__dumi-default-layout-toc" />
         )}
         {/* 侧边栏渲染 */}
-        {showSideMenu && (
+        {(showSideMenu && !is404) && (
           <SideMenu mobileMenuCollapsed={menuCollapsed} location={location} />
         )}
         {/* 页面渲染 */}
-        {isHome ? (
+        {is404 ? children : isHome ? (
           <Home content={children} />
         ) : (
           <Renderer location={location} content={children} />

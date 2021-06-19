@@ -13,6 +13,7 @@ export const useLinkMap = () => {
       }
       map[current.title.split(' ')[0]] = current;
       map[current.title] = current;
+      map[current.path] = current;
     }
     return map;
   }, [menu]);
