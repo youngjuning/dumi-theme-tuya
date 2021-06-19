@@ -2,7 +2,7 @@ import './style/layout.less';
 
 import axios from 'axios';
 import { context } from 'dumi/theme';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { CSSProperties, useContext, useEffect, useMemo, useState } from 'react';
 
 import { IRouteComponentProps } from '@umijs/types';
 
@@ -48,6 +48,19 @@ const Layout: React.FC<IRouteComponentProps> = ({ children, location }) => {
 
   useHandlePostPath();
 
+  const layoutStyle = useMemo(() => {
+    const style: CSSProperties = {
+      paddingBottom: isHome ? 198 : 50,
+      overflow: isHome ? 'hidden' : 'unset',
+      backgroundSize: 'cover',
+    }
+    const background = meta?.background
+    if (background) {
+      style.backgroundImage = `url(${background})`
+    }
+    return style
+  }, [isHome, meta])
+
   return (
     <CodeContext.Provider
       value={{
@@ -68,12 +81,7 @@ const Layout: React.FC<IRouteComponentProps> = ({ children, location }) => {
           if (menuCollapsed) return;
           setMenuCollapsed(true);
         }}
-        style={{
-          backgroundImage: `url(${meta.background})`,
-          paddingBottom: isHome ? 198 : 50,
-          overflow: isHome ? 'hidden' : 'unset',
-          backgroundSize: 'cover',
-        }}
+        style={layoutStyle}
       >
         {/* 顶部导航渲染 */}
         <Navbar
