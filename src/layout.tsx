@@ -2,7 +2,9 @@ import './style/layout.less';
 
 import axios from 'axios';
 import { context } from 'dumi/theme';
-import React, { CSSProperties, useContext, useEffect, useMemo, useState } from 'react';
+import React, {
+  CSSProperties, useContext, useEffect, useLayoutEffect, useMemo, useState
+} from 'react';
 
 import { IRouteComponentProps } from '@umijs/types';
 
@@ -36,11 +38,14 @@ const Layout: React.FC<IRouteComponentProps> = ({ children, location }) => {
   });
 
   const linkMap = useLinkMap();
-  const is404 = useMemo(() => {
+  const [is404, setIs404] = useState(false)
+  useLayoutEffect(() => {
     if (location && linkMap) {
-      return !(location.pathname in linkMap)
+      setIs404(!(location.pathname in linkMap))
     }
-    return false
+    else {
+      setIs404(false)
+    }
   }, [location, linkMap])
 
   useEffect(() => {
