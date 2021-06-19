@@ -41,7 +41,7 @@ const Layout: React.FC<IRouteComponentProps> = ({ children, location }) => {
       return !(location.pathname in linkMap)
     }
     return false
-  }, [linkMap, linkMap])
+  }, [location, linkMap])
 
   useEffect(() => {
     if (ctxValues.apiData === null) {
