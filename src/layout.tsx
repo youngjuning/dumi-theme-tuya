@@ -39,14 +39,16 @@ const Layout: React.FC<IRouteComponentProps> = ({ children, location }) => {
 
   const linkMap = useLinkMap();
   const [is404, setIs404] = useState(false)
-  useLayoutEffect(() => {
-    if (location && location.pathname && linkMap) {
-      setIs404(!(location.pathname in linkMap))
-    }
-    else {
-      setIs404(false)
-    }
-  }, [location, linkMap])
+  // TODO: 实在是处理不了了，本地dev和prod都正常，线上很奇怪
+  // useLayoutEffect(() => {
+  //   console.log('location', location, linkMap)
+  //   if (location && location.pathname && linkMap) {
+  //     setIs404(!(location.pathname in linkMap))
+  //   }
+  //   else {
+  //     setIs404(false)
+  //   }
+  // }, [location, linkMap])
 
   useEffect(() => {
     if (ctxValues.apiData === null) {
