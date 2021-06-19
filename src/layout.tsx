@@ -40,7 +40,7 @@ const Layout: React.FC<IRouteComponentProps> = ({ children, location }) => {
   const linkMap = useLinkMap();
   const [is404, setIs404] = useState(false)
   useLayoutEffect(() => {
-    if (location && linkMap) {
+    if (location && location.pathname && linkMap) {
       setIs404(!(location.pathname in linkMap))
     }
     else {
