@@ -39,7 +39,7 @@ const Layout: React.FC<IRouteComponentProps> = ({ children, location }) => {
 
   const linkMap = useLinkMap();
   const [is404, setIs404] = useState(false)
-  // TODO: 实在是处理不了了，本地dev和prod都正常，线上很奇怪
+  // TODO: 本地和线上不一致。404目前用绝对定位z-index方案。
   // useLayoutEffect(() => {
   //   console.log('location', location, linkMap)
   //   if (location && location.pathname && linkMap) {
