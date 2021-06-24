@@ -59,17 +59,21 @@ export default ({ name }) => {
           <tbody>
             {data.map(row => (
               <tr key={row.name}>
-                <td className="col-0">{row.name}</td>
-                <td className="col-1">{row.description || '--'}</td>
+                <td className="col-0" dangerouslySetInnerHTML={{
+                  __html: row.name
+                }} ></td>
+                <td className="col-1" dangerouslySetInnerHTML={{
+                  __html:row.description || '--'
+                }} ></td>
                 <td className="col-2">
                   <div dangerouslySetInnerHTML={{ __html: row.types }}></div>
                 </td>
                 <td className="col-3">
-                  <code>
-                    {row.defaultValue ||
+                  <code dangerouslySetInnerHTML={{
+                    __html:row.defaultValue ||
                       (!row.optional && texts.required) ||
-                      '--'}
-                  </code>
+                      '--'
+                  }} />
                 </td>
               </tr>
             ))}
