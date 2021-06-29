@@ -1,11 +1,12 @@
-export type TransformType = 'anchor' | 'code';
-export type TransformFunc = (value: string) => string;
+export type TransformFunc = (code: string) => string;
 
-export type Transformer = Partial<Record<TransformType, TransformFunc>>;
+const anchorScanner = /\[[\s\S]*?\]\([\s\S]*?\)/g;
+const codeScanner = /(\`[\s\S]*?\`)|\*\*[\s\S]*?\*\*/g;
+const badgeScanner = /<Badge>[\s\S].*?<\/Badge>/g;
 
-export const defaultTransformer: Transformer = {
-  anchor: value => {
-    const inner = value.slice(1, value.length - 1);
+const transformAnchor: TransformFunc = code => {
+  if (code) {
+    const inner = code.slice(1, code.length - 1);
     const split = '](';
     const splitIdx = inner.indexOf(split);
     const label = inner.slice(0, splitIdx);
@@ -14,30 +15,35 @@ export const defaultTransformer: Transformer = {
       href = href.toLocaleLowerCase().replace(/\./, '');
     }
     return `<a href="${href}">${label}</a>`;
-  },
-  code: value => {
-    value = value.replace(/\`|\*/g, '');
-    return `<code>${value}</code>`;
-  },
+  }
 };
 
-export const transform = (
-  markdown: string,
-  transformer: Transformer = defaultTransformer,
-) => {
-  const anchor = transformer?.anchor;
-  if (anchor) {
-    markdown = markdown.replace(
-      /\[[\s\S]*?\]\([\s\S]*?\)/g,
-      value => value && anchor(value),
-    );
-  }
-  const code = transformer?.code;
+const parseAnchor: TransformFunc = code =>
+  code.replace(anchorScanner, transformAnchor);
+
+const transformCode: TransformFunc = code => {
   if (code) {
-    markdown = markdown.replace(
-      /(\`[\s\S]*?\`)|\*\*[\s\S]*?\*\*/g,
-      value => value && code(value),
-    );
+    code = code.replace(/\`|\*/g, '');
+    return `<code>${code}</code>`;
   }
-  return markdown;
 };
+
+const parseCode: TransformFunc = code =>
+  code.replace(codeScanner, transformCode);
+
+const transformBadge: TransformFunc = code => {
+  if (code) {
+    const text = code.replace(/^<Badge>|<\/Badge>$/, '');
+    return `<span class="__dumi-default-badge">${text}</span>`;
+  }
+};
+
+const parseBadge: TransformFunc = code =>
+  code.replace(badgeScanner, transformBadge);
+
+export const compose = <T>(...fns: Array<(value: T) => T>) =>
+  (value: T) => fns.reduce((a, b) => b(a), value);
+
+export const transform = compose(parseAnchor, parseBadge, parseCode);
+
+export { codeScanner, anchorScanner, badgeScanner };

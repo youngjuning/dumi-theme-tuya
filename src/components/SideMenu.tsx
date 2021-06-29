@@ -5,6 +5,7 @@ import { context, Link, NavLink } from 'dumi/theme';
 import React, { FC, useContext, useMemo } from 'react';
 
 import { useDerivedStateFromProps } from '../hooks/useDerivedStateFromProps';
+import { badgeScanner } from '../parser';
 import LocaleSelect from './LocaleSelect';
 import SlugList from './SlugList';
 
@@ -12,6 +13,8 @@ interface INavbarProps {
   mobileMenuCollapsed: boolean;
   location: any;
 }
+
+const getDisplayTitle = (title: string) => title ? title.replace(badgeScanner, '') : title
 
 const SideMenu: FC<INavbarProps> = ({ mobileMenuCollapsed, location }) => {
   const {
@@ -135,7 +138,7 @@ const SideMenu: FC<INavbarProps> = ({ mobileMenuCollapsed, location }) => {
                       {item.children.map(child => (
                         <Menu.Item key={child.title}>
                           <NavLink to={child.path} exact>
-                            <span>{child.title}</span>
+                            <span>{getDisplayTitle(child.title)}</span>
                           </NavLink>
                           {/* group children slugs */}
                           {Boolean(
@@ -156,7 +159,7 @@ const SideMenu: FC<INavbarProps> = ({ mobileMenuCollapsed, location }) => {
                       to={item.path}
                       exact={!(item.children && item.children.length)}
                     >
-                      {item.title}
+                      {getDisplayTitle(item.title)}
                     </NavLink>
                     {/* group slugs */}
                     {show1LevelSlugs && <SlugList slugs={meta.slugs} />}
