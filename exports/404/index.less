@@ -1,0 +1,48 @@
+.layout404 {
+  position: relative;
+  z-index: 100;
+  &-bg {
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-image: url(https://images.tuyacn.com/rms-static/1cd99aa0-ad85-11ea-b284-05fb73bbbccd-1592059781450.png?tyName=404.png);
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+  }
+  &-content {
+    z-index: 20;
+    position: fixed;
+    width: 100vw;
+    word-break: break-all;
+    position: fixed;
+    left: 20%;
+    top: 28%;
+    &-title {
+      font-size: 48px;
+    }
+    &-subTitle {
+      font-size: 16px;
+      margin-top: 16px;
+    }
+  }
+}
+
+@media screen and (max-width: 740px) {
+  .layout404 {
+    &-content {
+      padding: 0 48px;
+      &-title {
+        font-size: 24px;
+      }
+      &-subTitle {
+        font-size: 12px;
+        margin-top: 16px;
+      }
+      a {
+        display: block;
+      }
+    }
+  }
+}

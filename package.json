@@ -5,6 +5,7 @@
   "files": [
     "src"
   ],
+  "main": "./exports/index.js",
   "sideEffects": [
     "./**/*.less"
   ],
