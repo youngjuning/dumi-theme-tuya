@@ -1,1 +1,0 @@
-export {default as notFound } from './404'
