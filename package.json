@@ -3,7 +3,8 @@
   "version": "1.2.2",
   "description": "The tuya theme of dumi",
   "files": [
-    "src"
+    "src",
+    "exports"
   ],
   "main": "./exports/index.js",
   "sideEffects": [
