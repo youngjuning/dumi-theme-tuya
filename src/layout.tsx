@@ -66,7 +66,7 @@ const Layout: React.FC<IRouteComponentProps> = ({ children, location }) => {
       overflow: isHome ? 'hidden' : 'unset',
       backgroundSize: 'cover',
     }
-    const background = meta?.background
+    const background = meta?.hero?.background
     if (background) {
       style.backgroundImage = `url(${background})`
     }
@@ -88,7 +88,7 @@ const Layout: React.FC<IRouteComponentProps> = ({ children, location }) => {
         data-show-slugs={String(showSlugs)}
         data-site-mode={mode === 'site'}
         data-gapless={String(!!meta.gapless)}
-        data-use-bg={!!meta.background}
+        data-use-bg={!!meta?.hero?.background}
         onClick={() => {
           if (menuCollapsed) return;
           setMenuCollapsed(true);
