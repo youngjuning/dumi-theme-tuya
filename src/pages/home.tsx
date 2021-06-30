@@ -17,14 +17,11 @@ interface HomeMeta {
 
 export const Home = ({ content }: { content?: ReactNode }) => {
   const { meta, base } = useContext(context);
-  const { image, title, desc, actions, footer, background } = (meta?.hero ?? {}) as HomeMeta;
+  const { image, title, desc, actions, footer } = (meta?.hero ?? {}) as HomeMeta;
   return (
     <div className={'__dumi-default-layout-home'}>
       <div
         className={'__dumi-default-layout-hero'}
-        style={{
-          backgroundColor: background ? 'transparent' : '#f5f6f8',
-        }}
       >
         {image ? <img src={image} /> : null}
         <h1>{title}</h1>

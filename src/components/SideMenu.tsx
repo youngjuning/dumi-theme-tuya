@@ -1,6 +1,6 @@
 import './SideMenu.less';
 
-import Menu from 'antd/lib/menu';
+import {Menu} from 'antd';
 import { context, Link, NavLink } from 'dumi/theme';
 import React, { FC, useContext, useMemo } from 'react';
 
