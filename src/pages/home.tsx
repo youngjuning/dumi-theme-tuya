@@ -17,7 +17,7 @@ interface HomeMeta {
 
 export const Home = ({ content }: { content?: ReactNode }) => {
   const { meta, base } = useContext(context);
-  const { image, title, desc, actions, footer, background } = meta.hero as HomeMeta;
+  const { image, title, desc, actions, footer, background } = (meta?.hero ?? {}) as HomeMeta;
   return (
     <div className={'__dumi-default-layout-home'}>
       <div

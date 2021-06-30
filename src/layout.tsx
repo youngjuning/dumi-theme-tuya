@@ -2,9 +2,7 @@ import './style/layout.less';
 
 import axios from 'axios';
 import { context } from 'dumi/theme';
-import React, {
-  CSSProperties, useContext, useEffect, useLayoutEffect, useMemo, useState
-} from 'react';
+import React, { CSSProperties, useContext, useEffect, useMemo, useState } from 'react';
 
 import { IRouteComponentProps } from '@umijs/types';
 
@@ -88,7 +86,7 @@ const Layout: React.FC<IRouteComponentProps> = ({ children, location }) => {
         data-show-slugs={String(showSlugs)}
         data-site-mode={mode === 'site'}
         data-gapless={String(!!meta.gapless)}
-        data-use-bg={!!meta?.hero?.background}
+        data-use-bg={isHome}
         onClick={() => {
           if (menuCollapsed) return;
           setMenuCollapsed(true);

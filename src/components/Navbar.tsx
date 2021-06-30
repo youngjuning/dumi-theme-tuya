@@ -5,6 +5,7 @@ import React, { FC, MouseEvent, useContext } from 'react';
 
 import { classnames } from '../utils';
 import LocaleSelect from './LocaleSelect';
+import { useCondition } from '../hooks';
 
 interface INavbarProps {
   location: any;
@@ -23,9 +24,8 @@ const Navbar: FC<INavbarProps> = ({
     base,
     config: { mode, title, logo },
     nav: navItems,
-    meta,
   } = useContext(context);
-  const useBg = !!meta.background;
+  const useBg = useCondition('isHome', location);
 
   return (
     <div
