@@ -44,7 +44,7 @@ const Navbar: FC<INavbarProps> = ({
       {/* logo & title */}
       <div className="logo_wrapper">
         <Link className="__dumi-default-navbar-logo" to={base}>
-          <img src={logo as string} alt={title} />
+          {logo ? <img src={logo as string} alt={title} /> : null}
           <span className="label">{title}</span>
         </Link>
         <div className="search_wrapper">{navPrefix}</div>
