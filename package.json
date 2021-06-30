@@ -1,6 +1,6 @@
 {
   "name": "@tuya/dumi-theme-tuya",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "The tuya theme of dumi",
   "files": [
     "src",

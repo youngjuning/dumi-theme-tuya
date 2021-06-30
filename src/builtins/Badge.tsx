@@ -1,8 +1,7 @@
 import './Badge.less';
 
-import { BadgeProps } from 'antd';
 import React from 'react';
 
-export default (props: BadgeProps) => (
+export default (props) => (
   <span className="__dumi-default-badge" {...props} />
 );
