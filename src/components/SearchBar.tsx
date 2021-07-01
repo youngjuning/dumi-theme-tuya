@@ -42,8 +42,8 @@ export default ({ location }) => {
           : {})}
       />
       <ul>
-        {items.map(meta => (
-          <li key={meta.path} onClick={() => setKeywords('')}>
+        {items.map((meta, i) => (
+          <li key={meta.path + i} onClick={() => setKeywords('')}>
             <AnchorLink to={meta.path}>
               {meta.parent?.title && <span>{meta.parent.title}</span>}
               {meta.title}
