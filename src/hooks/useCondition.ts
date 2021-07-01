@@ -16,7 +16,7 @@ export const useCondition = (
     return locale && /^zh|cn$/i.test(locale);
   }
 
-  const isHome = location?.pathname.replace(locale, '') === '/';
+  const isHome = (!!meta?.hero) || location?.pathname.replace(locale, '') === '/'
   if (condition === 'isHome') {
     return isHome;
   }
