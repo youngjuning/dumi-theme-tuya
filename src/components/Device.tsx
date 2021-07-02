@@ -3,6 +3,7 @@ import './Device.less';
 import { context, usePrefersColor } from 'dumi/theme';
 import QRCode from 'qrcode.react';
 import React, { FC, useContext, useEffect, useState } from 'react';
+import { appendParams } from '../utils';
 
 interface IDeviceProps {
   className?: string;
@@ -21,8 +22,12 @@ const Device: FC<IDeviceProps> = ({
   const [dateTime, setDateTime] = useState(new Date());
   const [color] = usePrefersColor();
   const {
-    config: { mode },
+    config: { mode, theme },
+    meta,
   } = useContext(context);
+
+  const qrcode = theme?.qrcode;
+  const demo = meta?.demo;
 
   // re-render iframe if prefers color changed
   useEffect(() => {
@@ -67,7 +72,10 @@ const Device: FC<IDeviceProps> = ({
             onClick={() => setRenderKey(Math.random())}
           />
           <button className="__dumi-default-icon" role="qrcode">
-            <QRCode value={url} size={96} />
+            <QRCode
+              value={qrcode ? appendParams(qrcode, { demo }) : url}
+              size={96}
+            />
           </button>
           <a
             href={url}
