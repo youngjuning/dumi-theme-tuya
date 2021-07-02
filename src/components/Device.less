@@ -3,18 +3,18 @@
 .gen-device-style(@scale) {
   width: @s-device-width * @scale;
   min-width: @s-device-width * @scale;
-  height: @s-device-width * @scale * @s-device-ratio;
 }
 
 .@{prefix}-device {
   position: sticky;
   top: @s-device-gap-top;
+  height: calc(100vh - 104px);
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   margin-left: @s-content-margin;
   width: @s-device-width;
   min-width: @s-device-width;
-  height: @s-device-width * @s-device-ratio;
   border-radius: 32px;
   overflow: hidden;
 
