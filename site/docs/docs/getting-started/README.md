@@ -85,3 +85,17 @@ docs
 ├── index.en.md # 首页 en
 └── index.md # 首页 zh
 ```
+
+5. 启动调试～
+
+```shell
+yarn start
+```
+
+6. 打包部署
+
+```shell
+yarn build
+```
+
+然后将dist目录拿去部署就好了

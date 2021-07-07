@@ -85,3 +85,17 @@ docs
 ├── index.en.md # Index en
 └── index.md # Index zh
 ```
+
+5. Start debugging～
+
+```shell
+yarn start
+```
+
+6. Build and deploy
+
+```shell
+yarn build
+```
+
+Then take the dist directory and deploy it
