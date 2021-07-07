@@ -67,23 +67,23 @@ export default defineConfig({
 
 ```txt
 docs
-├── config # Nav - Config
+├── config                          # Nav - Config
 │   ├── README.en.md
 │   └── README.md
-├── docs # Nav - Docs
-│   ├── exports # Docs - SideMenu - Exports
+├── docs                            # Nav - Docs
+│   ├── exports                     # Docs - SideMenu - Exports
 │   │   ├── add-404.en.md
 │   │   └── add-404.md
-│   ├── getting-started # Docs - SideMenu - Introduction
+│   ├── getting-started             # Docs - SideMenu - Introduction
 │   │   ├── README.en.md
 │   │   ├── README.md
 │   │   ├── how-works.en.md
 │   │   └── how-works.md
-│   └── usage # Docs - SideMenu - Basic Usage
+│   └── usage                       # Docs - SideMenu - Basic Usage
 │       ├── front-matter.en.md
 │       └── front-matter.md
-├── index.en.md # Index en
-└── index.md # Index zh
+├── index.en.md                     # Index en
+└── index.md                        # Index zh
 ```
 
 5. Start debugging～

@@ -67,23 +67,23 @@ export default defineConfig({
 
 ```txt
 docs
-├── config # 顶部导航 - 配置
+├── config                        # 顶部导航 - 配置
 │   ├── README.en.md
 │   └── README.md
-├── docs # 顶部导航 - 文档
-│   ├── exports # 文档 - 侧边菜单 - 内置组件
+├── docs                          # 顶部导航 - 文档
+│   ├── exports                   # 文档 - 侧边菜单 - 内置组件
 │   │   ├── add-404.en.md
 │   │   └── add-404.md
-│   ├── getting-started # 文档 - 侧边菜单 - 介绍
+│   ├── getting-started           # 文档 - 侧边菜单 - 介绍
 │   │   ├── README.en.md
 │   │   ├── README.md
 │   │   ├── how-works.en.md
 │   │   └── how-works.md
-│   └── usage # 文档 - 侧边菜单 - 基础使用
+│   └── usage                     # 文档 - 侧边菜单 - 基础使用
 │       ├── front-matter.en.md
 │       └── front-matter.md
-├── index.en.md # 首页 en
-└── index.md # 首页 zh
+├── index.en.md                   # 首页 en
+└── index.md                      # 首页 zh
 ```
 
 5. 启动调试～
