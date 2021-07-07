@@ -1,13 +1,13 @@
 import './SideMenu.less';
 
-import {Menu} from 'antd';
-import { context, Link, NavLink } from 'dumi/theme';
+import { Menu } from 'antd';
+import { AnchorLink, context, Link, NavLink } from 'dumi/theme';
 import React, { FC, useContext, useMemo } from 'react';
 
 import { useDerivedStateFromProps } from '../hooks/useDerivedStateFromProps';
 import { badgeScanner } from '../parser';
+import { getArray } from '../utils';
 import LocaleSelect from './LocaleSelect';
-import SlugList from './SlugList';
 
 interface INavbarProps {
   mobileMenuCollapsed: boolean;
@@ -15,6 +15,9 @@ interface INavbarProps {
 }
 
 const getDisplayTitle = (title: string) => title ? title.replace(badgeScanner, '') : title
+const getSlugItemKey = (slug: { value: string }) => typeof slug?.value === 'string' && slug.value.trim().toLowerCase()
+// toc 子列表不显示父节点（depth=1为父节点）
+const getSlugsList = (meta: any) => getArray<any>(meta?.slugs).filter(s => s.depth !== 1)
 
 const SideMenu: FC<INavbarProps> = ({ mobileMenuCollapsed, location }) => {
   const {
@@ -46,6 +49,8 @@ const SideMenu: FC<INavbarProps> = ({ mobileMenuCollapsed, location }) => {
 
   const [openKeys, setOpenKeys] = useDerivedStateFromProps(defaultOpenKeys);
 
+  const isTocMenu = meta.toc === 'menu'
+
   return (
     <div
       className="__dumi-default-menu"
@@ -69,9 +74,8 @@ const SideMenu: FC<INavbarProps> = ({ mobileMenuCollapsed, location }) => {
             <p>
               <object
                 type="image/svg+xml"
-                data={`https://img.shields.io/github/stars${
-                  repoUrl.match(/((\/[^\/]+){2})$/)[1]
-                }?style=social`}
+                data={`https://img.shields.io/github/stars${repoUrl.match(/((\/[^\/]+){2})$/)[1]
+                  }?style=social`}
               />
             </p>
           )}
@@ -117,13 +121,13 @@ const SideMenu: FC<INavbarProps> = ({ mobileMenuCollapsed, location }) => {
           {!isHiddenMenus && (
             <Menu
               openKeys={openKeys}
-              selectedKeys={[meta.title]}
+              selectedKeys={isTocMenu ? [location?.hash] : [meta.title]}
               onOpenChange={setOpenKeys}
               mode="inline"
             >
-              {menu.map(item => {
+              {menu.map((item) => {
                 // always use meta from routes to reduce menu data size
-                const hasSlugs = Boolean(meta.slugs?.length);
+                const hasSlugs = Boolean(meta?.slugs?.length);
                 const hasChildren =
                   item.children && Boolean(item.children.length);
                 const show1LevelSlugs =
@@ -134,23 +138,43 @@ const SideMenu: FC<INavbarProps> = ({ mobileMenuCollapsed, location }) => {
 
                 if (Boolean(item.children && item.children.length)) {
                   return (
-                    <Menu.SubMenu key={item.title} title={item.title}>
-                      {item.children.map(child => (
-                        <Menu.Item key={child.title}>
-                          <NavLink to={child.path} exact>
-                            <span>{getDisplayTitle(child.title)}</span>
-                          </NavLink>
-                          {/* group children slugs */}
-                          {Boolean(
-                            meta.toc === 'menu' &&
-                              typeof window !== 'undefined' &&
-                              child.path === location.pathname &&
-                              hasSlugs,
-                          ) && <SlugList slugs={meta.slugs} />}
-                        </Menu.Item>
-                      ))}
+                    <Menu.SubMenu key={item.title} title={getDisplayTitle(item.title)}>
+                      {item.children.map(child => {
+                        const isGroup = Boolean(
+                          meta.toc === 'menu' &&
+                          typeof window !== 'undefined' &&
+                          child.path === location.pathname &&
+                          hasSlugs,
+                        )
+                        if (isGroup) {
+                          return <Menu.ItemGroup title={getDisplayTitle(child.title)} key={child.title} >
+                            {getSlugsList(meta).map((slug) => <Menu.Item key={`#${getSlugItemKey(slug)}`}>
+                              <AnchorLink to={`#${slug.heading}`}>
+                                <span>{slug.value}</span>
+                              </AnchorLink>
+                            </Menu.Item>)}
+                          </Menu.ItemGroup>
+                        }
+                        return (
+                          <Menu.Item key={child.title}>
+                            <NavLink to={child.path} exact>
+                              <span>{getDisplayTitle(child.title)}</span>
+                            </NavLink>
+                          </Menu.Item>
+                        )
+                      })}
                     </Menu.SubMenu>
                   );
+                }
+
+                if (show1LevelSlugs) {
+                  return <Menu.ItemGroup title={getDisplayTitle(item.title)}>
+                    {getSlugsList(meta).map(slug => <Menu.Item key={`#${getSlugItemKey(slug)}`} >
+                      <AnchorLink to={`#${slug.heading}`}>
+                        <span>{slug.value}</span>
+                      </AnchorLink>
+                    </Menu.Item>)}
+                  </Menu.ItemGroup>
                 }
 
                 return (
@@ -161,8 +185,6 @@ const SideMenu: FC<INavbarProps> = ({ mobileMenuCollapsed, location }) => {
                     >
                       {getDisplayTitle(item.title)}
                     </NavLink>
-                    {/* group slugs */}
-                    {show1LevelSlugs && <SlugList slugs={meta.slugs} />}
                   </Menu.Item>
                 );
               })}

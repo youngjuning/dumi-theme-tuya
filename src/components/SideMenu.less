@@ -269,12 +269,7 @@
       padding: 0;
 
       .ant-menu {
-        &-root {
-          padding-top: 26px;
-        }
-
-        // 一级菜单
-        > .ant-menu-item {
+        .item_style {
           &::after {
             display: none;
           }
@@ -297,6 +292,14 @@
               color: #346ae5;
             }
           }
+        }
+        &-root {
+          padding-top: 26px;
+        }
+
+        // 一级菜单
+        > .ant-menu-item {
+          .item_style()
         }
         // 二级菜单
         .ant-menu-submenu {
@@ -329,6 +332,15 @@
                   color: #346ae5;
                 }
               }
+            }
+          }
+        }
+
+        &-item-group {
+          &-list {
+            padding-left: 0;
+            > .ant-menu-item {
+              .item_style()
             }
           }
         }
