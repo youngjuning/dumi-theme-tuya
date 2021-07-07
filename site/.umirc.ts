@@ -51,6 +51,6 @@ export default defineConfig({
   hash: isProd,
   // base: isProd ? '/tuya-panel-kit-docs' : '/', // router base
   publicPath: isProd
-    ? '//cdn.jsdelivr.net/gh/TuyaInc/tuya-panel-kit-docs@gh-pages/'
+    ? '//cdn.jsdelivr.net/gh/youngjuning/dumi-theme-tuya@gh-pages/'
     : '/',
 } as IConfig);
