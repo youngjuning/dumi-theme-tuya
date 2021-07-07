@@ -2,7 +2,13 @@ import './style/layout.less';
 
 import axios from 'axios';
 import { context } from 'dumi/theme';
-import React, { CSSProperties, useContext, useEffect, useMemo, useState } from 'react';
+import React, {
+  CSSProperties,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
 import { IRouteComponentProps } from '@umijs/types';
 
@@ -36,17 +42,6 @@ const Layout: React.FC<IRouteComponentProps> = ({ children, location }) => {
   });
 
   const linkMap = useLinkMap();
-  const [is404, setIs404] = useState(false)
-  // TODO: 本地和线上不一致。404目前用绝对定位z-index方案。
-  // useLayoutEffect(() => {
-  //   console.log('location', location, linkMap)
-  //   if (location && location.pathname && linkMap) {
-  //     setIs404(!(location.pathname in linkMap))
-  //   }
-  //   else {
-  //     setIs404(false)
-  //   }
-  // }, [location, linkMap])
 
   useEffect(() => {
     if (ctxValues.apiData === null) {
@@ -63,13 +58,13 @@ const Layout: React.FC<IRouteComponentProps> = ({ children, location }) => {
       paddingBottom: isHome ? 198 : 50,
       overflow: isHome ? 'hidden' : 'unset',
       backgroundSize: 'cover',
-    }
-    const background = meta?.hero?.background
+    };
+    const background = meta?.hero?.background;
     if (background) {
-      style.backgroundImage = `url(${background})`
+      style.backgroundImage = `url(${background})`;
     }
-    return style
-  }, [isHome, meta])
+    return style;
+  }, [isHome, meta]);
 
   return (
     <CodeContext.Provider
@@ -103,15 +98,15 @@ const Layout: React.FC<IRouteComponentProps> = ({ children, location }) => {
             ev.stopPropagation();
           }}
         />
-        {(showSlugs && !is404) && (
+        {showSlugs && (
           <SlugsList slugs={meta.slugs} className="__dumi-default-layout-toc" />
         )}
         {/* 侧边栏渲染 */}
-        {(showSideMenu && !is404) && (
+        {showSideMenu && (
           <SideMenu mobileMenuCollapsed={menuCollapsed} location={location} />
         )}
         {/* 页面渲染 */}
-        {is404 ? children : isHome ? (
+        {isHome ? (
           <Home content={children} />
         ) : (
           <Renderer location={location} content={children} />
