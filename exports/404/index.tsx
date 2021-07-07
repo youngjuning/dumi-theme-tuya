@@ -4,7 +4,7 @@ import React, { useContext } from 'react';
 
 import { context, NavLink } from '@umijs/preset-dumi/lib/theme';
 
-export default () => {
+export const NotFound = () => {
   const { locale } = useContext(context);
   const isCN = !/en/.test(locale);
   const home = isCN ? '/' : '/en';
