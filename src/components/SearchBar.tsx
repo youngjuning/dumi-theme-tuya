@@ -16,8 +16,8 @@ export default ({ location }) => {
 
   const i18n = useI18N({
     placeholder: {
-      zh: '搜索组件...',
-      en: 'search component...',
+      zh: '搜索文档...',
+      en: 'search document...',
     },
   });
 
