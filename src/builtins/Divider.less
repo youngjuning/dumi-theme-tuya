@@ -1,0 +1,32 @@
+@import (reference) '../style/variables.less';
+
+.@{prefix}-divider {
+  position: relative;
+  display: block;
+  padding: 0 !important;
+  background-color: #f1f1f1;
+  width: calc(100% + 48px);
+  left: -24px;
+  color: transparent;
+  .border {
+    display: block;
+    content: '';
+    height: 8px;
+    background-color: #fff;
+  }
+  &::before {
+    .border();
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+  &::after {
+    .border();
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+}
+
+// 什么时候支持？父选择器
+// *:has(.@{prefix}-divider) + * {
+//   margin-top: 0;
+// }
