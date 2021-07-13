@@ -4,15 +4,17 @@ import React, { CSSProperties } from 'react';
 
 // traverse and map fiber list
 // changelog列表排版
+// 这里的意义是转换处理日期
+// 分割线和对齐其实可以用css伪类，但是先这样吧
+// 主要是想无侵入式地修改changelog排版
 export default ({ children }: { children: JSX.Element }) => {
   return (
     <div className="__dumi-default-changelog">
       {React.Children.map(children, (fiber, i) => {
         if (typeof fiber.type === 'string') {
-          // 约定h2是日期标题
           if (fiber.type === 'h2') {
-            // 这里需要去除svg、转换日期样式
             const children = fiber.props?.children ?? [];
+            // fiber是immutable的，这里需要修改props所以clone一下
             const newFiber = React.cloneElement(fiber, {
               className: 'version_title',
               children: React.Children.map(children, (fiber, i) => {
@@ -37,6 +39,7 @@ export default ({ children }: { children: JSX.Element }) => {
               }),
             });
 
+            // 添加分割线
             return (
               <>
                 {i > 0 && <hr className="divider" />}
@@ -47,6 +50,7 @@ export default ({ children }: { children: JSX.Element }) => {
           if (fiber.type.startsWith('h') && fiber.type !== 'h3') {
             return fiber;
           } else {
+            // 左边距对齐
             return React.cloneElement(fiber, {
               style: {
                 paddingLeft: 58,
@@ -54,6 +58,7 @@ export default ({ children }: { children: JSX.Element }) => {
             });
           }
         }
+        return fiber
       })}
     </div>
   );
