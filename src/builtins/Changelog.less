@@ -1,0 +1,81 @@
+@import (reference) '../style/variables.less';
+
+.@{prefix}-changelog {
+  *:nth-child(1) {
+    margin-top: 0;
+  }
+
+  h2 {
+    font-weight: normal;
+    font-size: 18px;
+  }
+
+  h3 {
+    margin-bottom: 0;
+    margin-top: 16px;
+  }
+
+  strong {
+    font-weight: normal;
+  }
+
+  ul,
+  ol {
+    margin: 8px 0 8px 10px;
+    padding: 0;
+    list-style-type: none;
+
+    li {
+      margin-bottom: 4px;
+      font-size: 14px;
+      position: relative;
+      &::before {
+        position: absolute;
+        top: 11px;
+        left: -8px;
+        margin-top: -1px;
+        width: 2.5px;
+        height: 2.5px;
+        border-radius: 50%;
+        background-color: gray;
+        display: block;
+        content: '';
+      }
+    }
+  }
+  
+  .changelog-anchor {
+    & + a {
+      display: inline-block;
+      font-size: 18px;
+      font-weight: normal;
+    }
+  }
+
+  .divider {
+    position: relative;
+    top: 12px;
+    left: 74px;
+    width: calc(100% - 50px);
+  }
+
+  .version_title {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 24px;
+
+    svg {
+      display: none;
+    }
+
+    .date_style {
+      padding: 4px 8px;
+      border-radius: 2px;
+      background-color: #f3f4f5;
+      margin-left: 16px;
+      font-weight: normal;
+      position: relative;
+      font-size: 12px;
+    }
+  }
+}
