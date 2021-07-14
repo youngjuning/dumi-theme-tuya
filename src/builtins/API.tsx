@@ -48,22 +48,6 @@ export default ({ name }) => {
     }
   }, [apiData, localeName]);
 
-  useEffect(()=> {
-    const table = ref.current
-    if(table){
-      const prev = table.previousSibling as HTMLElement
-      const parent = table.parentElement as HTMLElement
-      if(prev && parent){
-        const hr = document.createElement('hr')
-        parent.insertBefore(hr, prev)
-        const isTitle = prev.tagName?.toLowerCase()?.startsWith('h')
-        if(isTitle){
-          hr.className = '__dumi-default-api_hr'
-        }
-      }
-    }
-  }, [data?.length])
-
   return (
     <>
       {data && data.length > 0 && (

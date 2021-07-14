@@ -12,6 +12,22 @@
   border-radius: 8px;
   counter-reset: h2-index;
 
+  #api {
+    position: relative;
+    margin-top: 49px;
+    &::after {
+      position: relative;
+      top: -48px;
+      left: -20px;
+      width: calc(100% + 44px);
+      height: 1px;
+      display: block;
+      content: '';
+      background: #F3F4F5;
+    }
+  }
+  
+
   & > h2 {
     position: relative;
     &::before {
