@@ -3,6 +3,7 @@ import './Device.less';
 import { context, usePrefersColor } from 'dumi/theme';
 import QRCode from 'qrcode.react';
 import React, { FC, useContext, useEffect, useState } from 'react';
+
 import { appendParams } from '../utils';
 
 interface IDeviceProps {

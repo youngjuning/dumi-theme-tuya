@@ -3,11 +3,7 @@ import './style/layout.less';
 import axios from 'axios';
 import { context } from 'dumi/theme';
 import React, {
-  CSSProperties,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
+    CSSProperties, useContext, useEffect, useLayoutEffect, useMemo, useState
 } from 'react';
 
 import { IRouteComponentProps } from '@umijs/types';
@@ -16,7 +12,7 @@ import Navbar from './components/Navbar';
 import SearchBar from './components/SearchBar';
 import SideMenu from './components/SideMenu';
 import SlugsList from './components/SlugList';
-import { CodeContext, WriteAbleCtx } from './context';
+import { CodeContext, CodeCtxType } from './context';
 import { useCondition, useHandlePostPath, useLinkMap } from './hooks';
 import { Renderer } from './pages';
 import { Home } from './pages/home';
@@ -35,11 +31,18 @@ const Layout: React.FC<IRouteComponentProps> = ({ children, location }) => {
 
   const [menuCollapsed, setMenuCollapsed] = useState<boolean>(true);
 
-  const [ctxValues, setCtxValues] = useState<WriteAbleCtx>({
+  const [ctxValues, setCtxValues] = useState<Partial<CodeCtxType>>({
     themes: [],
     currentTheme: null,
     apiData: null,
+    desc: null,
   });
+
+  // 这里重置desc
+  // 使用layout effect优先级比Desc的effect高
+  useLayoutEffect(() => {
+    setCtxValues({ ...ctxValues, desc: null, descHideTitle: 'false' });
+  }, [location.pathname]);
 
   const linkMap = useLinkMap();
 

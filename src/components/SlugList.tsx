@@ -2,6 +2,7 @@ import './SlugList.less';
 
 import { AnchorLink } from 'dumi/theme';
 import React, { FC } from 'react';
+
 import { getArray } from '../utils';
 
 const SlugsList: FC<{ slugs: any; className?: string }> = ({

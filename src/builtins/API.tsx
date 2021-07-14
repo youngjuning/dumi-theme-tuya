@@ -1,5 +1,7 @@
+import './API.less';
+
 import { context } from 'dumi/theme';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import { CodeContext } from '../context';
 
@@ -32,6 +34,8 @@ export default ({ name }) => {
 
   const { apiData } = useContext(CodeContext);
 
+  const ref = useRef<HTMLTableElement>()
+
   useEffect(() => {
     if (apiData && apiData[name]) {
       const renderData = apiData[name].map(item => ({
@@ -44,10 +48,26 @@ export default ({ name }) => {
     }
   }, [apiData, localeName]);
 
+  useEffect(()=> {
+    const table = ref.current
+    if(table){
+      const prev = table.previousSibling as HTMLElement
+      const parent = table.parentElement as HTMLElement
+      if(prev && parent){
+        const hr = document.createElement('hr')
+        parent.insertBefore(hr, prev)
+        const isTitle = prev.tagName?.toLowerCase()?.startsWith('h')
+        if(isTitle){
+          hr.className = '__dumi-default-api_hr'
+        }
+      }
+    }
+  }, [data?.length])
+
   return (
     <>
       {data && data.length > 0 && (
-        <table>
+        <table ref={ref} className="__dumi-default-api">
           <thead>
             <tr>
               <th className="col-0">{texts.name}</th>

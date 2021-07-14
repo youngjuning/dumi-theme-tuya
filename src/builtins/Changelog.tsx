@@ -1,6 +1,6 @@
 import './Changelog.less';
 
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, useEffect, useRef } from 'react';
 
 // traverse and map fiber list
 // changelog列表排版
@@ -8,8 +8,15 @@ import React, { CSSProperties } from 'react';
 // 分割线和对齐其实可以用css伪类，但是先这样吧
 // 主要是想无侵入式地修改changelog排版
 export default ({ children }: { children: JSX.Element }) => {
+  const ref = useRef<HTMLDivElement>();
+  useEffect(() => {
+    const parent = ref.current?.parentElement;
+    if (parent) {
+      parent.style.paddingLeft = '24px';
+    }
+  }, []);
   return (
-    <div className="__dumi-default-changelog">
+    <div ref={ref} className="__dumi-default-changelog">
       {React.Children.map(children, (fiber, i) => {
         if (typeof fiber.type === 'string') {
           if (fiber.type === 'h2') {
@@ -58,7 +65,7 @@ export default ({ children }: { children: JSX.Element }) => {
             });
           }
         }
-        return fiber
+        return fiber;
       })}
     </div>
   );
