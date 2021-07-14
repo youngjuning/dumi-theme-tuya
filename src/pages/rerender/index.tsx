@@ -42,8 +42,6 @@ export const Renderer: React.FC<RerenderProps> = ({ content, location }) => {
     }
   }, [demo]);
 
-  const [] = useState();
-  console.log('descHideTitle', descHideTitle);
   return (
     <div className="__dumi-default-layout-content">
       <div className="__dumi-default-mobile-content">
