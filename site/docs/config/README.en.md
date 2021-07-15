@@ -57,9 +57,10 @@ export default defineConfig({
   // ...Omit other configuration
   themeConfig: {
    repository: {
-      url: 'https://github.com/TuyaInc/tuya-panel-kit-docs', // github url
-      branch: 'main', // The main branch is main (older projects might be master)
-      platform: 'github' // github | gitlab
+      url: 'https://github.com/youngjuning/dumi-theme-tuya',// github url
+      branch: 'master',// The main branch is main (older projects might be master)
+      platform: 'github', // github | gitlab
+      // dir: '/site' // Directory, a subfolder in the GitHub repository
     },
   },
 } as IConfig);

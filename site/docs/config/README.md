@@ -57,9 +57,10 @@ export default defineConfig({
   // ...省略其他配置
   themeConfig: {
    repository: {
-      url: 'https://github.com/TuyaInc/tuya-panel-kit-docs', // github仓库地址
-      branch: 'main', // 主分支 main（比较老的项目可能是master）
-      platform: 'github' // github | gitlab
+      url: 'https://github.com/youngjuning/dumi-theme-tuya',// github仓库地址
+      branch: 'master',// 分支
+      platform: 'github', // github | gitlab
+      // dir: '/site' // 目录，在github仓库中的子文件夹
     },
   },
 } as IConfig);

@@ -26,14 +26,14 @@ const Footer = ({ location }) => {
     },
   } = useContext(context);
 
-  const { url: repoUrl, branch, platform } = repository ?? {};
+  const { url: repoUrl, branch, platform, dir = '' } = repository ?? {};
   const updatedTimeIns = new Date(meta.updatedTime);
   const updatedTime: any = `${updatedTimeIns.toLocaleDateString([], {
     hour12: false,
   })} ${updatedTimeIns.toLocaleTimeString([], { hour12: false })}`;
   const repoPlatform =
     { github: 'GitHub', gitlab: 'GitLab' }[
-      (repoUrl || '').match(/(github|gitlab)/)?.[1] || 'nothing'
+    (repoUrl || '').match(/(github|gitlab)/)?.[1] || 'nothing'
     ] || platform;
 
   const isHome = useCondition('isHome', location);
@@ -43,7 +43,7 @@ const Footer = ({ location }) => {
     return (
       <div className="__dumi-default-layout-footer-meta">
         {repoPlatform && (
-          <Link to={`${repoUrl}/edit/${branch}/${meta.filePath}`}>
+          <Link to={`${repoUrl}/edit/${branch}${dir}/${meta.filePath}`}>
             {isCN
               ? `在 ${repoPlatform} 上编辑此页`
               : `Edit this doc on ${repoPlatform}`}

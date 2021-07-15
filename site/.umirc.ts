@@ -27,6 +27,14 @@ export default defineConfig({
   theme: {
     'primary-color': '#ff4800',
   },
+  themeConfig: {
+    repository: {
+      url: 'https://github.com/youngjuning/dumi-theme-tuya',
+      branch: 'master',
+      platform: 'github',
+      dir: '/site'
+    },
+  },
   logo:
     'https://imagesd.tuyaus.com/tyims/rms-static/c118f100-7bd1-11ea-be8a-afe9921c3d8a-1586595140625.ico?tyName=tuya_favicon.ico',
   navs: {
