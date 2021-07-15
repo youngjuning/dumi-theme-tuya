@@ -11,6 +11,8 @@ nav:
 title: Getting Started
 ---
 
+<Desc hidetitle="true">
+ 
 <center><p align="center"><img src="https://images.tuyacn.com/rms-static/3dec3ee0-b3d9-11eb-9adb-1b12f902f79d-1620903119310.png?tyName=210513tuya.png" width="200px" /></p></center>
 
 <center><h1>@tuya/dumi-theme-tuya</h1></center>
@@ -23,18 +25,22 @@ title: Getting Started
   </a>&nbsp;
 </p>
 </center>
+ 
+</Desc>
+  
 
-### Features
+
+## Features
 
 - Markdown routing based on dumi contract form.
 - Just write Markdown to generate a documentation site!
 - Demo separated deployment access is provided.
 
-### Who using?
+## Who using?
 
 - [Tuya Design](https://github.com/TuyaInc/tuya-panel-kit-docs)
 
-### Install
+## Install
 
 1. create dumi app
 
