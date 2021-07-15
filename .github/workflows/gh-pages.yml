@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@v2.3.4
         
       - name: Install Deps
-        run: cd ./site && yarn install
+        run: cd ./site && yarn add @tuya/dumi-theme-tuya
 
       - name: Build App
         run: cd ./site && yarn build
