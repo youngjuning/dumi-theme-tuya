@@ -11,6 +11,8 @@ nav:
 title: 快速上手
 ---
 
+<Desc hidetitle="true">
+ 
 <center><p align="center"><img src="https://images.tuyacn.com/rms-static/3dec3ee0-b3d9-11eb-9adb-1b12f902f79d-1620903119310.png?tyName=210513tuya.png" width="200px" /></p></center>
 
 <center><h1>@tuya/dumi-theme-tuya</h1></center>
@@ -23,18 +25,20 @@ title: 快速上手
   </a>&nbsp;
 </p>
 </center>
+ 
+</Desc>
 
-### 特性
+## 特性
 
 - 基于 dumi 约定式 markdown 路由
 - 只需要编写 markdown 即可生成文档站点！
 - 提供 demo 分离部署接入
 
-### 谁在使用？
+## 谁在使用？
 
 - [Tuya Design 组件文档](https://github.com/TuyaInc/tuya-panel-kit-docs)
 
-### 安装
+## 安装
 
 1. 创建 dumi 应用
 
