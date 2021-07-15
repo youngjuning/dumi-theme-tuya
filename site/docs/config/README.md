@@ -45,3 +45,22 @@ export default defineConfig({
 ## demoUrl
 
 demo 的部署地址
+
+## repository
+
+部署在github上时可以设置显示底部“在 GitHub 上编辑此页”，示例：
+
+```ts
+import { defineConfig, IConfig } from 'dumi';
+
+export default defineConfig({
+  // ...省略其他配置
+  themeConfig: {
+   repository: {
+      url: 'https://github.com/TuyaInc/tuya-panel-kit-docs', // github仓库地址
+      branch: 'main', // 主分支 main（比较老的项目可能是master）
+      platform: 'github' // github | gitlab
+    },
+  },
+} as IConfig);
+```
