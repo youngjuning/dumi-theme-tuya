@@ -235,29 +235,30 @@ a {
   }
 
   &-footer-meta {
-    margin-top: 40px;
-    padding-top: 24px;
+    margin-top: 16px;
     display: flex;
     color: @c-secondary;
     font-size: 14px;
     justify-content: space-between;
     border-top: 1px solid @c-border;
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 24px;
 
     @media only screen and (max-width: 960px) {
       display: block;
     }
 
     > a {
-      margin-bottom: 4px;
       display: block;
-      color: @c-primary;
       text-decoration: none;
+      color: #346ae5;
     }
 
     > span:last-child {
       &::before {
         content: attr(data-updated-text);
-        color: @c-primary;
+        color: #346ae5;
       }
     }
   }

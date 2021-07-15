@@ -1,11 +1,12 @@
 import './style.less';
 
-import { context } from 'dumi/theme';
+import { context, Link } from 'dumi/theme';
 import { Location } from 'history-with-query';
-import React, { ReactNode, useContext, useEffect, useRef, useState } from 'react';
+import React, { ReactNode, useContext, useEffect, useRef } from 'react';
 
 import Device from '../../components/Device';
 import { CodeContext } from '../../context';
+import { useCondition } from '../../hooks';
 import { useMeta } from '../../hooks/useMeta';
 import { useThemeConfig } from '../../hooks/useThemeConfig';
 import { transform } from '../../parser';
@@ -16,6 +17,46 @@ export interface RerenderProps {
   content: ReactNode;
   location: Location<{}>;
 }
+
+const Footer = ({ location }) => {
+  const {
+    meta,
+    config: {
+      theme: { repository },
+    },
+  } = useContext(context);
+
+  const { url: repoUrl, branch, platform } = repository ?? {};
+  const updatedTimeIns = new Date(meta.updatedTime);
+  const updatedTime: any = `${updatedTimeIns.toLocaleDateString([], {
+    hour12: false,
+  })} ${updatedTimeIns.toLocaleTimeString([], { hour12: false })}`;
+  const repoPlatform =
+    { github: 'GitHub', gitlab: 'GitLab' }[
+      (repoUrl || '').match(/(github|gitlab)/)?.[1] || 'nothing'
+    ] || platform;
+
+  const isHome = useCondition('isHome', location);
+  const isCN = useCondition('isCN', location);
+
+  if (!isHome && meta.filePath && !meta.gapless) {
+    return (
+      <div className="__dumi-default-layout-footer-meta">
+        {repoPlatform && (
+          <Link to={`${repoUrl}/edit/${branch}/${meta.filePath}`}>
+            {isCN
+              ? `在 ${repoPlatform} 上编辑此页`
+              : `Edit this doc on ${repoPlatform}`}
+          </Link>
+        )}
+        <span data-updated-text={isCN ? '最后更新时间：' : 'Last update: '}>
+          {updatedTime}
+        </span>
+      </div>
+    );
+  }
+  return <></>;
+};
 
 export const Renderer: React.FC<RerenderProps> = ({ content, location }) => {
   // 因为yml的desc不支持markdown，这里扩展了Desc标签
@@ -89,6 +130,7 @@ export const Renderer: React.FC<RerenderProps> = ({ content, location }) => {
             </nav>
           )}
           {content}
+          <Footer location={location} />
         </article>
         {demo && demoUrl && (
           <Device
