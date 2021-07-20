@@ -8,7 +8,7 @@ export default ({ data, href, name }) => {
   const init = async () => {
     try {
       setLoading(true);
-      const store = await fetch(data).then(res => res.json());
+      const store = await fetch(`${data}?t=${Date.now()}`).then(res => res.json());
       const result = store[name];
       setText(`${result.label}：${result.value}`);
     } catch (error) {
