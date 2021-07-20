@@ -23,7 +23,7 @@
       height: 1px;
       display: block;
       content: '';
-      background: #F3F4F5;
+      background: #f3f4f5;
     }
   }
 
@@ -44,11 +44,11 @@
 
   @media @mobile {
     padding: 16px !important;
-  & > h2 {
-    &::before {
-      display: none;
+    & > h2 {
+      &::before {
+        display: none;
+      }
     }
-  }
   }
 
   > *:nth-child(1) {
@@ -185,13 +185,17 @@
   // list
   ul,
   ol {
-    margin: 8px 0 8px 32px;
+    margin: 8px 0 8px 16px;
     padding: 0;
 
     li {
       margin-bottom: 4px;
       font-size: 14px;
     }
+  }
+
+  ul {
+    list-style-type: circle;
   }
 
   // table

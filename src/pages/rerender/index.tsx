@@ -33,7 +33,7 @@ const Footer = ({ location }) => {
   })} ${updatedTimeIns.toLocaleTimeString([], { hour12: false })}`;
   const repoPlatform =
     { github: 'GitHub', gitlab: 'GitLab' }[
-    (repoUrl || '').match(/(github|gitlab)/)?.[1] || 'nothing'
+      (repoUrl || '').match(/(github|gitlab)/)?.[1] || 'nothing'
     ] || platform;
 
   const isHome = useCondition('isHome', location);
@@ -87,8 +87,12 @@ export const Renderer: React.FC<RerenderProps> = ({ content, location }) => {
     <div className="__dumi-default-layout-content">
       <div className="__dumi-default-mobile-content">
         <article>
-          {title && (desc || codeDesc) && (
-            <div className="__dumi-default-content-header markdown">
+          {title && (
+            <div
+              className={classnames('__dumi-default-content-header markdown', {
+                'no-desc': !codeDesc,
+              })}
+            >
               {descHideTitle === 'true' || (
                 <h1
                   dangerouslySetInnerHTML={{
