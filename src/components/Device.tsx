@@ -47,12 +47,12 @@ const Device: FC<IDeviceProps> = ({
   const [loading, setLoading] = useState(true);
 
   return (
-    <Spin spinning={loading} delay={300}>
-      <div
-        className={['__dumi-default-device'].concat(className).join(' ')}
-        data-device-type="iOS"
-        data-mode={mode}
-      >
+    <div
+      className={['__dumi-default-device'].concat(className).join(' ')}
+      data-device-type="iOS"
+      data-mode={mode}
+    >
+      <Spin spinning={loading} delay={300}>
         <div className="device_contain">
           <div className="__dumi-default-device-status">
             <span>{title}</span>
@@ -60,9 +60,9 @@ const Device: FC<IDeviceProps> = ({
               .getHours()
               .toString()
               .padStart(2, '0')}:${dateTime
-              .getMinutes()
-              .toString()
-              .padStart(2, '0')}`}</span>
+                .getMinutes()
+                .toString()
+                .padStart(2, '0')}`}</span>
           </div>
           <iframe
             ref={forwardRef}
@@ -93,8 +93,8 @@ const Device: FC<IDeviceProps> = ({
             />
           </div>
         </div>
-      </div>
-    </Spin>
+      </Spin>
+    </div>
   );
 };
 
