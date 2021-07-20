@@ -17,7 +17,7 @@ title: Desc
 
 Here is an example of Markdown on this page:
 
-```txt
+```markdown
 ---
 title: Desc
 ---

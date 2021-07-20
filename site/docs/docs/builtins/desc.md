@@ -17,7 +17,7 @@ title: Desc 描述
 
 下面是本页面的markdown示例：
 
-```txt
+```markdown
 ---
 title: Desc 描述
 ---
