@@ -46,6 +46,22 @@ Render attributes indicate the data source used by the API tag. Examples of API 
 
 The deployment address of the demo.
 
+### demoInfoUrl
+
+The link in the lower right corner of demo supports demo parameters in the following format:
+
+```ts
+import { defineConfig, IConfig } from 'dumi';
+
+export default defineConfig({
+  // ...Omit other configuration
+  themeConfig: {
+    // {demo} will be replaced with the current Demo path
+    demoInfoUrl: 'https://github.com/tuya/tuya-panel-kit/tree/master/example/src/pages{demo}/index.tsx'
+  },
+} as IConfig);
+```
+
 ## repository
 
 When deployed on GitHub, you can set the bottom of the display to "Edit this page on Git Hub". Example:

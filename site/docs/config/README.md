@@ -46,6 +46,22 @@ export default defineConfig({
 
 demo 的部署地址
 
+### demoInfoUrl
+
+demo右下角链接，支持demo参数，格式如下：
+
+```ts
+import { defineConfig, IConfig } from 'dumi';
+
+export default defineConfig({
+  // ...省略其他配置
+  themeConfig: {
+    // {demo}会被替换成当前demo path
+    demoInfoUrl: 'https://github.com/tuya/tuya-panel-kit/tree/master/example/src/pages{demo}/index.tsx'
+  },
+} as IConfig);
+```
+
 ## repository
 
 部署在github上时可以设置显示底部“在 GitHub 上编辑此页”，示例：
