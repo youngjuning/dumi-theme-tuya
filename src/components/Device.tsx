@@ -29,6 +29,7 @@ const Device: FC<IDeviceProps> = ({
   } = useContext(context);
 
   const qrcode = theme?.qrcode;
+  const demoInfoUrl = theme?.demoInfoUrl;
   const demo = meta?.demo;
 
   // re-render iframe if prefers color changed
@@ -85,7 +86,7 @@ const Device: FC<IDeviceProps> = ({
               />
             </button>
             <a
-              href={url}
+              href={demoInfoUrl ? demoInfoUrl.replace('{demo}', demo) : url}
               target="_blank"
               rel="noreferrer"
               className="__dumi-default-icon"
