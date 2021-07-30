@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useHistory } from 'react-router';
 
+import { scrollDoc } from '../utils/scrollDoc';
+
 export const useHandlePostPath = () => {
   const history = useHistory();
   useEffect(() => {
@@ -8,6 +10,8 @@ export const useHandlePostPath = () => {
       const href = event?.data?.data;
       if (href) {
         history.push(href);
+        const scrollElement = scrollDoc();
+        scrollElement.scrollTop = 0
       }
     };
     window.addEventListener('message', handle);
