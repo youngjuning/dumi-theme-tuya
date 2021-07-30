@@ -46,7 +46,7 @@ export default defineConfig({
 
 demo 的部署地址
 
-### demoInfoUrl
+## demoInfoUrl
 
 demo右下角链接，支持demo参数，格式如下：
 
