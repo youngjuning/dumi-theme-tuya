@@ -1,10 +1,9 @@
 ---
+title: themeConfig
 nav:
   title: Config
 toc: menu
 ---
-
-# themeConfig
 
 The following are the configuration items of the Theme Config extension. Please refer to more configuration items https://umijs.org/zh-CN/config
 

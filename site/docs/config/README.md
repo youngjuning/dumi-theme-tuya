@@ -1,10 +1,9 @@
 ---
+title: themeConfig 配置
 nav:
   title: 配置
 toc: menu
 ---
-
-# themeConfig 配置
 
 以下为 themeConfig 扩展的配置项，更多配置项请参考 https://umijs.org/zh-CN/config
 
