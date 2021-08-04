@@ -94,28 +94,39 @@ const API = ({ identifier, export: expt }: IApiComponentProps) => {
   const { locale } = useContext(context);
   const texts = /^zh|cn$/i.test(locale) ? LOCALE_TEXTS['zh-CN'] : LOCALE_TEXTS['en-US'];
 
+  const ref = useRef<HTMLTableElement>()
+
+  // hide table name
+  useEffect(() => {
+    const previousElementSibling = ref?.current?.previousElementSibling
+    if (previousElementSibling) {
+      const id = previousElementSibling?.id
+      if (/^api-/.test(id)) {
+        previousElementSibling.remove()
+      }
+    }
+  }, [])
+
   return (
     <>
       {data && (
-        <table style={{ marginTop: 24 }}>
+        <table ref={ref} style={{ marginTop: 24 }} className="__dumi-default-api">
           <thead>
             <tr>
-              <th>{texts.name}</th>
-              <th>{texts.description}</th>
-              <th>{texts.type}</th>
-              <th>{texts.default}</th>
+              <th className="col-0">{texts.name}</th>
+              <th className="col-1">{texts.description}</th>
+              <th className="col-2">{texts.type}</th>
+              <th className="col-3">{texts.default}</th>
             </tr>
           </thead>
           <tbody>
             {getArray(data[expt]).map(row => (
               <tr key={row.identifier}>
-                <td>{row.identifier}</td>
-                <td>{row.description || '--'}</td>
-                <td>
-                  <code>{row.type}</code>
-                </td>
-                <td>
-                  <code>{row.default || (row.required && texts.required) || '--'}</code>
+                <td className="col-0" dangerouslySetInnerHTML={{ __html: row.identifier }}></td>
+                <td className="col-1" dangerouslySetInnerHTML={{ __html: row.description || '--' }} ></td>
+                <td className="col-2" dangerouslySetInnerHTML={{ __html: row.type }}></td>
+                <td className="col-3">
+                  <code dangerouslySetInnerHTML={{ __html: row.default || (row.required && texts.required) || '--' }}></code>
                 </td>
               </tr>
             ))}
