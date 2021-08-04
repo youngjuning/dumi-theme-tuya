@@ -1,9 +1,10 @@
 import './API.less';
 
-import { context } from 'dumi/theme';
+import { context, IApiComponentProps, useApiData } from 'dumi/theme';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import { CodeContext } from '../context';
+import { getArray } from '../utils/array';
 
 const LOCALE_TEXTS = {
   'zh-CN': {
@@ -27,7 +28,7 @@ const useLocaleName = () => {
   return /^zh|cn$/i.test(locale) ? 'zh-CN' : 'en-US';
 };
 
-export default ({ name }) => {
+const TuyaAPI = ({ name }) => {
   const localeName = useLocaleName();
   const texts = LOCALE_TEXTS[localeName];
   const [data, setData] = useState(null);
@@ -67,14 +68,14 @@ export default ({ name }) => {
                   __html: row.name
                 }} ></td>
                 <td className="col-1" dangerouslySetInnerHTML={{
-                  __html:row.description || '--'
+                  __html: row.description || '--'
                 }} ></td>
                 <td className="col-2">
                   <div dangerouslySetInnerHTML={{ __html: row.types }}></div>
                 </td>
                 <td className="col-3">
                   <code dangerouslySetInnerHTML={{
-                    __html:row.defaultValue ||
+                    __html: row.defaultValue ||
                       (!row.optional && texts.required) ||
                       '--'
                   }} />
@@ -86,4 +87,51 @@ export default ({ name }) => {
       )}
     </>
   );
-};
+}
+
+const API = ({ identifier, export: expt }: IApiComponentProps) => {
+  const data = useApiData(identifier);
+  const { locale } = useContext(context);
+  const texts = /^zh|cn$/i.test(locale) ? LOCALE_TEXTS['zh-CN'] : LOCALE_TEXTS['en-US'];
+
+  return (
+    <>
+      {data && (
+        <table style={{ marginTop: 24 }}>
+          <thead>
+            <tr>
+              <th>{texts.name}</th>
+              <th>{texts.description}</th>
+              <th>{texts.type}</th>
+              <th>{texts.default}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {getArray(data[expt]).map(row => (
+              <tr key={row.identifier}>
+                <td>{row.identifier}</td>
+                <td>{row.description || '--'}</td>
+                <td>
+                  <code>{row.type}</code>
+                </td>
+                <td>
+                  <code>{row.default || (row.required && texts.required) || '--'}</code>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </>
+  );
+}
+
+export default ({ name, ...props }) => {
+  if (name) {
+    return <TuyaAPI name={name} />
+  }
+  if (props.identifier) {
+    return <API {...props as any} />
+  }
+  return <></>
+}
