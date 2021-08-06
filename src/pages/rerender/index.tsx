@@ -33,7 +33,7 @@ const Footer = ({ location }) => {
   })} ${updatedTimeIns.toLocaleTimeString([], { hour12: false })}`;
   const repoPlatform =
     { github: 'GitHub', gitlab: 'GitLab' }[
-      (repoUrl || '').match(/(github|gitlab)/)?.[1] || 'nothing'
+    (repoUrl || '').match(/(github|gitlab)/)?.[1] || 'nothing'
     ] || platform;
 
   const isHome = useCondition('isHome', location);
@@ -63,7 +63,10 @@ export const Renderer: React.FC<RerenderProps> = ({ content, location }) => {
   const { desc: codeDesc, descHideTitle } = useContext(CodeContext);
   const { title, desc, demo } = useMeta();
 
-  const { demoUrl } = useThemeConfig();
+  const themeConfig = useThemeConfig();
+  const demoUrlUseSearch = location?.query?.demoUrl
+  const demoUrl = demoUrlUseSearch ?? themeConfig?.demoUrl
+
   const { locale } = useContext(context);
 
   const themeCtx = useContext(CodeContext);
