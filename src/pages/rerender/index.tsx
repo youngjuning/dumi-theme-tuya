@@ -12,6 +12,7 @@ import { useThemeConfig } from '../../hooks/useThemeConfig';
 import { transform } from '../../parser';
 import { classnames } from '../../utils/classnames';
 import { join } from '../../utils/join';
+import { getSession, setSession } from '../../utils/session';
 
 export interface RerenderProps {
   content: ReactNode;
@@ -64,7 +65,10 @@ export const Renderer: React.FC<RerenderProps> = ({ content, location }) => {
   const { title, desc, demo } = useMeta();
 
   const themeConfig = useThemeConfig();
-  const demoUrlUseSearch = location?.query?.demoUrl
+  const demoUrlUseSearch = getSession('demoUrl') ?? location?.query?.demoUrl
+  if (demoUrlUseSearch) {
+    setSession('demoUrl', String(demoUrlUseSearch))
+  }
   const demoUrl = demoUrlUseSearch ?? themeConfig?.demoUrl
 
   const { locale } = useContext(context);
