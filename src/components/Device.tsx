@@ -1,11 +1,11 @@
 import './Device.less';
 
+import { Spin } from 'antd';
 import { context, usePrefersColor } from 'dumi/theme';
 import QRCode from 'qrcode.react';
 import React, { FC, useContext, useEffect, useState } from 'react';
 
 import { appendParams } from '../utils';
-import { Spin } from 'antd';
 
 interface IDeviceProps {
   className?: string;
@@ -13,6 +13,8 @@ interface IDeviceProps {
   title?: string;
   forwardRef?: React.MutableRefObject<HTMLIFrameElement>;
 }
+
+const getUrlLocaleKey = (url: string) => typeof url === 'string' && url.split('#')[0]
 
 const Device: FC<IDeviceProps> = ({
   url,
@@ -45,7 +47,11 @@ const Device: FC<IDeviceProps> = ({
     };
   }, []);
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true)
+  }, [getUrlLocaleKey(url), renderKey])
 
   return (
     <div
@@ -69,7 +75,7 @@ const Device: FC<IDeviceProps> = ({
             ref={forwardRef}
             title="dumi-previewer"
             src={url}
-            key={renderKey}
+            key={renderKey + getUrlLocaleKey(url)}
             onLoad={() => setLoading(false)}
             onError={() => setLoading(false)}
           />
