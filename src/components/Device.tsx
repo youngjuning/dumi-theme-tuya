@@ -14,7 +14,8 @@ interface IDeviceProps {
   forwardRef?: React.MutableRefObject<HTMLIFrameElement>;
 }
 
-const getUrlLocaleKey = (url: string) => typeof url === 'string' && url.split('#')[0]
+const getUrlLocaleKey = (url: string) =>
+  typeof url === 'string' && url.split('#')[0];
 
 const Device: FC<IDeviceProps> = ({
   url,
@@ -22,7 +23,7 @@ const Device: FC<IDeviceProps> = ({
   title = 'tuya',
   forwardRef,
 }) => {
-  const [renderKey, setRenderKey] = useState(Math.random());
+  const [renderKey, setRenderKey] = useState<number | string>(Math.random());
   const [dateTime, setDateTime] = useState(new Date());
   const [color] = usePrefersColor();
   const {
@@ -48,10 +49,14 @@ const Device: FC<IDeviceProps> = ({
   }, []);
 
   const [loading, setLoading] = useState(false);
-
   useEffect(() => {
-    setLoading(true)
-  }, [getUrlLocaleKey(url), renderKey])
+    setLoading(true);
+  }, [renderKey]);
+
+  const urlLocaleKey = getUrlLocaleKey(url);
+  useEffect(() => {
+    setRenderKey(urlLocaleKey);
+  }, [urlLocaleKey]);
 
   return (
     <div
@@ -67,15 +72,15 @@ const Device: FC<IDeviceProps> = ({
               .getHours()
               .toString()
               .padStart(2, '0')}:${dateTime
-                .getMinutes()
-                .toString()
-                .padStart(2, '0')}`}</span>
+              .getMinutes()
+              .toString()
+              .padStart(2, '0')}`}</span>
           </div>
           <iframe
             ref={forwardRef}
             title="dumi-previewer"
             src={url}
-            key={renderKey + getUrlLocaleKey(url)}
+            key={renderKey}
             onLoad={() => setLoading(false)}
             onError={() => setLoading(false)}
           />
