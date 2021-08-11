@@ -49,14 +49,12 @@ const Device: FC<IDeviceProps> = ({
   }, []);
 
   const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    setLoading(true);
-  }, [renderKey]);
 
   const urlLocaleKey = getUrlLocaleKey(url);
+
   useEffect(() => {
-    setRenderKey(urlLocaleKey);
-  }, [urlLocaleKey]);
+    setLoading(true);
+  }, [renderKey, urlLocaleKey]);
 
   return (
     <div
