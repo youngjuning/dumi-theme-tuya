@@ -2,7 +2,7 @@ import './SourceCode.less';
 
 import { useCopy } from 'dumi/theme';
 import Highlight, { defaultProps, Language } from 'prism-react-renderer';
-import theme from 'prism-react-renderer/themes/nightOwl';
+import theme from 'prism-react-renderer/themes/github';
 import React from 'react';
 
 export interface ICodeBlockProps {
