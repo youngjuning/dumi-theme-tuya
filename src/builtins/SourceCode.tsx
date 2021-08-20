@@ -12,53 +12,63 @@ export interface ICodeBlockProps {
   showCopy?: boolean;
 }
 
-let index = 0
-let last = ''
+let index = 0;
+let last = '';
 const getIndex = (ref: string) => {
-  if(ref === last){
-    index++
+  if (ref === last) {
+    index++;
   } else {
-    index = 0
+    index = 0;
   }
-  last = ref
-  return index
-}
+  last = ref;
+  return index;
+};
 
 const getStartPos = (token: string) => {
-  const pref = token.match(/^( +)/)
-  if(pref){
-    return pref[1].length
+  const pref = token.match(/^( +)/);
+  if (pref) {
+    return pref[1].length;
   }
-  return 0
-}
+  return 0;
+};
+
+const createLanguageSelector = (lang: string, type: any) =>
+  `span[data-jsx-token=${type.targetString}-${type.line}-${type.character}]`;
 
 export default ({ code, lang, showCopy = true }: ICodeBlockProps) => {
   const [copyCode, copyStatus] = useCopy();
 
-  const ctx = useContext(context)
-  const _demo = ctx.meta.demo
-  const index = getIndex(_demo)
+  const ctx = useContext(context);
+  const _demo = ctx.meta.demo;
+  const index = getIndex(_demo);
 
-  useEffect(()=> {
-    const typeAssetsUrl = ctx?.config?.theme?.typeAssetsUrl
-    if(typeAssetsUrl){
+  useEffect(() => {
+    const typeAssetsUrl = ctx?.config?.theme?.typeAssetsUrl;
+    if (typeAssetsUrl && _demo) {
       axios.get(typeAssetsUrl).then(res => {
-        const props = res?.data
-        const types = props?.[_demo]?.[index]
-        if(Array.isArray(types)){
+        const props = res?.data;
+        const types = props?.[_demo]?.[index];
+        if (Array.isArray(types)) {
           types.forEach(type => {
-            const dom = document.querySelector(`span[data-token=${type.targetString}-${type.line}-${type.character}]`)
-            if(dom){
-              dom.setAttribute('data-lsp', `${type.text}\n${type.docs}`)
+            const dom =
+              document.querySelector(createLanguageSelector('jsx', type)) ??
+              document.querySelector(createLanguageSelector('tsx', type)) ??
+              document.querySelector(createLanguageSelector('ts', type)) ??
+              document.querySelector(createLanguageSelector('js', type));
+            if (dom) {
+              dom.setAttribute(
+                'data-lsp',
+                `${type.text ?? ''}\n${type.docs ?? ''}`,
+              );
             }
-          })
+          });
         }
-      })
+      });
     }
-  }, [index, _demo])
+  }, [index, _demo]);
 
-  const ref = useRef(0)
-  const lastLine = useRef(0)
+  const ref = useRef(0);
+  const lastLine = useRef(0);
 
   return (
     <div className="__dumi-default-code-block">
@@ -75,20 +85,22 @@ export default ({ code, lang, showCopy = true }: ICodeBlockProps) => {
             {tokens.map((line, i) => (
               <div {...getLineProps({ line, key: i })}>
                 {line.map((token, key) => {
-                  if(i !== lastLine.current) {
-                    ref.current = 0
+                  if (i !== lastLine.current) {
+                    ref.current = 0;
                   }
-                  lastLine.current = i
+                  lastLine.current = i;
 
-                  const last = ref.current
-                  ref.current += token.content.length
-                  const props = getTokenProps({ token, key })
-                  if(/ /.test(token.content)){
-                   return <span {...props} />
+                  const last = ref.current;
+                  ref.current += token.content.length;
+                  const props = getTokenProps({ token, key });
+                  if (/ /.test(token.content)) {
+                    return <span {...props} />;
                   }
-                  return (
-                    <span data-token={`${token.content.trim()}-${i}-${last + getStartPos(token.content)}`} {...props} />
-                  )
+                  return React.createElement('span', {
+                    ...props,
+                    [`data-${lang}-token`]: `${token.content.trim()}-${i}-${last +
+                      getStartPos(token.content)}`,
+                  });
                 })}
               </div>
             ))}
