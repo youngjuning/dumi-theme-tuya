@@ -32,8 +32,14 @@ const getStartPos = (token: string) => {
   return 0;
 };
 
-const createLanguageSelector = (index: number,lang: string, type: any) =>
-  `span[data-${index}-${lang}-token=${type.targetString}-${type.line}-${type.character}]`;
+const createTokenSelector = (index: number, lang: string, type: any) =>
+  `span[data-${index}-${lang}-token='${type.targetString}-${type.line}-${type.character}']`;
+
+const selectToken = (index: number, lang: string, type: any) => {
+  if (type && type.targetString) {
+    return document.querySelector(createTokenSelector(index, lang, type));
+  }
+};
 
 export default ({ code, lang, showCopy = true }: ICodeBlockProps) => {
   const [copyCode, copyStatus] = useCopy();
@@ -49,12 +55,12 @@ export default ({ code, lang, showCopy = true }: ICodeBlockProps) => {
         const props = res?.data;
         const types = props?.[_demo]?.[index];
         if (Array.isArray(types)) {
-          types.forEach((type, i) => {
+          types.forEach(type => {
             const dom =
-              document.querySelector(createLanguageSelector(index, 'jsx', type)) ??
-              document.querySelector(createLanguageSelector(index, 'tsx', type)) ??
-              document.querySelector(createLanguageSelector(index, 'ts', type)) ??
-              document.querySelector(createLanguageSelector(index, 'js', type));
+              selectToken(index, 'jsx', type) ??
+              selectToken(index, 'tsx', type) ??
+              selectToken(index, 'ts', type) ??
+              selectToken(index, 'js', type);
             if (dom) {
               dom.setAttribute(
                 'data-lsp',
