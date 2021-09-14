@@ -47,7 +47,7 @@ const Layout: React.FC<IRouteComponentProps> = ({ children, location }) => {
   const linkMap = useLinkMap();
 
   useEffect(() => {
-    if (ctxValues.apiData === null) {
+    if (apiData && ctxValues.apiData === null) {
       axios
         .get(apiData)
         .then(res => setCtxValues({ ...ctxValues, apiData: res.data }));

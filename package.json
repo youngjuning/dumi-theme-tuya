@@ -1,6 +1,6 @@
 {
   "name": "@tuya/dumi-theme-tuya",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "The tuya theme of dumi",
   "files": [
     "src",
@@ -41,7 +41,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.3",
     "@testing-library/react": "^10.4.8",
-    "dumi": "1.1.17",
+    "dumi": "^1.1.26",
     "react-test-renderer": "^16.13.1"
   },
   "peerDependencies": {
