@@ -65,7 +65,7 @@ const Device: FC<IDeviceProps> = ({
         setRenderKey(Math.random())
       }
     }
-  }, [url, fixLocales, locales])
+  }, [url, fixLocales, locales, urlLocaleKey])
 
   return (
     <div
@@ -81,9 +81,9 @@ const Device: FC<IDeviceProps> = ({
               .getHours()
               .toString()
               .padStart(2, '0')}:${dateTime
-              .getMinutes()
-              .toString()
-              .padStart(2, '0')}`}</span>
+                .getMinutes()
+                .toString()
+                .padStart(2, '0')}`}</span>
           </div>
           <iframe
             ref={forwardRef}
