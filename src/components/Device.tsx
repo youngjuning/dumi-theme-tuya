@@ -27,11 +27,12 @@ const Device: FC<IDeviceProps> = ({
   const [dateTime, setDateTime] = useState(new Date());
   const [color] = usePrefersColor();
   const {
-    config: { mode, theme },
+    config: { mode, theme, locales, },
     meta,
   } = useContext(context);
 
   const qrcode = theme?.qrcode;
+  const fixLocales = theme?.fixLocales;
   const demoInfoUrl = theme?.demoInfoUrl;
   const demo = meta?.demo;
 
@@ -55,6 +56,16 @@ const Device: FC<IDeviceProps> = ({
   useEffect(() => {
     setLoading(true);
   }, [renderKey, urlLocaleKey]);
+
+  useEffect(() => {
+    if (fixLocales) {
+      const hash = url.split('#')[1]
+      const localeKeys = locales.map(item => item.name)
+      if (hash && localeKeys.find(key => hash.replace(/^\//, '').startsWith(key))) {
+        setRenderKey(Math.random())
+      }
+    }
+  }, [url, fixLocales, locales])
 
   return (
     <div

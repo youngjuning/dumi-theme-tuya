@@ -80,3 +80,18 @@ export default defineConfig({
   },
 } as IConfig);
 ```
+
+## fixLocales
+
+修复locales和path冲突问题(开启此特性会降低体验)
+
+```ts
+import { defineConfig, IConfig } from 'dumi';
+
+export default defineConfig({
+  // ...省略其他配置
+  themeConfig: {
+    fixLocales: true
+  },
+} as IConfig);
+```

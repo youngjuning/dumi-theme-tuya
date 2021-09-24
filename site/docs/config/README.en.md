@@ -80,3 +80,18 @@ export default defineConfig({
   },
 } as IConfig);
 ```
+
+## fixLocales
+
+Fixed locales and PATH conflicts(Enabling this feature degrades the experience)
+
+```ts
+import { defineConfig, IConfig } from 'dumi';
+
+export default defineConfig({
+  // ...Omit other configuration
+  themeConfig: {
+    fixLocales: true
+  },
+} as IConfig);
+```
