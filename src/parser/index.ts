@@ -41,9 +41,25 @@ const transformBadge: TransformFunc = code => {
 const parseBadge: TransformFunc = code =>
   code.replace(badgeScanner, transformBadge);
 
+export const parseLinkTitle = (title: string) => {
+  if (title.includes('::http')) {
+    const [text, link] = title.split('::')
+    return {
+      text, link
+    }
+  }
+  return {
+    text: title,
+    link: null
+  }
+}
+
+const parseHref: TransformFunc = code =>
+  code.includes(':http') ? parseLinkTitle(code).text : code
+
 export const compose = <T>(...fns: Array<(value: T) => T>) =>
   (value: T) => fns.reduce((a, b) => b(a), value);
 
-export const transform = compose(parseAnchor, parseBadge, parseCode);
+export const transform = compose(parseAnchor, parseBadge, parseCode, parseHref);
 
-export { codeScanner, anchorScanner, badgeScanner };
+export { codeScanner, anchorScanner, badgeScanner, parseHref };

@@ -5,7 +5,7 @@ import { AnchorLink, context, Link, NavLink } from 'dumi/theme';
 import React, { FC, useContext, useMemo } from 'react';
 
 import { useDerivedStateFromProps } from '../hooks/useDerivedStateFromProps';
-import { badgeScanner } from '../parser';
+import { badgeScanner, parseHref, parseLinkTitle } from '../parser';
 import { getArray } from '../utils';
 import LocaleSelect from './LocaleSelect';
 
@@ -14,10 +14,17 @@ interface INavbarProps {
   location: any;
 }
 
-const getDisplayTitle = (title: string) => title ? title.replace(badgeScanner, '') : title
-const getSlugItemKey = (slug: { value: string }) => typeof slug?.value === 'string' && slug.value.trim().toLowerCase()
+const getDisplayTitle = (title: string) => {
+  let text = title ? title.replace(badgeScanner, '') : title;
+  text = parseHref(text);
+  return text;
+};
+
+const getSlugItemKey = (slug: { value: string }) =>
+  typeof slug?.value === 'string' && slug.value.trim().toLowerCase();
 // toc 子列表不显示父节点（depth=1为父节点）
-const getSlugsList = (meta: any) => getArray<any>(meta?.slugs).filter(s => s.depth !== 1)
+const getSlugsList = (meta: any) =>
+  getArray<any>(meta?.slugs).filter(s => s.depth !== 1);
 
 const SideMenu: FC<INavbarProps> = ({ mobileMenuCollapsed, location }) => {
   const {
@@ -49,8 +56,7 @@ const SideMenu: FC<INavbarProps> = ({ mobileMenuCollapsed, location }) => {
 
   const [openKeys, setOpenKeys] = useDerivedStateFromProps(defaultOpenKeys);
 
-  const isTocMenu = meta.toc === 'menu'
-
+  const isTocMenu = meta.toc === 'menu';
   return (
     <div
       className="__dumi-default-menu"
@@ -125,7 +131,7 @@ const SideMenu: FC<INavbarProps> = ({ mobileMenuCollapsed, location }) => {
               onOpenChange={setOpenKeys}
               mode="inline"
             >
-              {menu.map((item) => {
+              {menu.map(item => {
                 // always use meta from routes to reduce menu data size
                 const hasSlugs = Boolean(meta?.slugs?.length);
                 const hasChildren =
@@ -138,53 +144,81 @@ const SideMenu: FC<INavbarProps> = ({ mobileMenuCollapsed, location }) => {
 
                 if (Boolean(item.children && item.children.length)) {
                   return (
-                    <Menu.SubMenu key={item.title} title={getDisplayTitle(item.title)}>
+                    <Menu.SubMenu
+                      key={item.title}
+                      title={getDisplayTitle(item.title)}
+                    >
                       {item.children.map(child => {
                         const isGroup = Boolean(
                           meta.toc === 'menu' &&
                           typeof window !== 'undefined' &&
                           child.path === location.pathname &&
                           hasSlugs,
-                        )
+                        );
                         if (isGroup) {
-                          return <Menu.ItemGroup title={getDisplayTitle(child.title)} key={child.title} >
-                            {getSlugsList(meta).map((slug) => <Menu.Item key={`#${getSlugItemKey(slug)}`}>
-                              <AnchorLink to={`#${slug.heading}`}>
-                                <span>{slug.value}</span>
-                              </AnchorLink>
-                            </Menu.Item>)}
-                          </Menu.ItemGroup>
+                          return (
+                            <Menu.ItemGroup
+                              title={getDisplayTitle(child.title)}
+                              key={child.title}
+                            >
+                              {getSlugsList(meta).map(slug => (
+                                <Menu.Item key={`#${getSlugItemKey(slug)}`}>
+                                  <AnchorLink to={`#${slug.heading}`}>
+                                    <span>{slug.value}</span>
+                                  </AnchorLink>
+                                </Menu.Item>
+                              ))}
+                            </Menu.ItemGroup>
+                          );
                         }
+                        const { link } = parseLinkTitle(child.title);
                         return (
-                          <Menu.Item key={child.title}>
-                            <NavLink to={child.path} exact>
-                              <span>{getDisplayTitle(child.title)}</span>
-                            </NavLink>
+                          <Menu.Item key={child.title} onClick={() => {
+                            if (link) {
+                              window.location.href = link
+                            }
+                          }}>
+                            {link ? (
+                              <a>{getDisplayTitle(child.title)}</a>
+                            ) : (
+                              <NavLink to={child.path} exact>
+                                <span>{getDisplayTitle(child.title)}</span>
+                              </NavLink>
+                            )}
                           </Menu.Item>
-                        )
+                        );
                       })}
                     </Menu.SubMenu>
                   );
                 }
 
                 if (show1LevelSlugs) {
-                  return <Menu.ItemGroup title={getDisplayTitle(item.title)}>
-                    {getSlugsList(meta).map(slug => <Menu.Item key={`#${getSlugItemKey(slug)}`} >
-                      <AnchorLink to={`#${slug.heading}`}>
-                        <span>{slug.value}</span>
-                      </AnchorLink>
-                    </Menu.Item>)}
-                  </Menu.ItemGroup>
+                  return (
+                    <Menu.ItemGroup title={getDisplayTitle(item.title)}>
+                      {getSlugsList(meta).map(slug => (
+                        <Menu.Item key={`#${getSlugItemKey(slug)}`}>
+                          <AnchorLink to={`#${slug.heading}`}>
+                            <span>{slug.value}</span>
+                          </AnchorLink>
+                        </Menu.Item>
+                      ))}
+                    </Menu.ItemGroup>
+                  );
                 }
 
+                const { link } = parseLinkTitle(item.title);
                 return (
                   <Menu.Item key={item.title}>
-                    <NavLink
-                      to={item.path}
-                      exact={!(item.children && item.children.length)}
-                    >
-                      {getDisplayTitle(item.title)}
-                    </NavLink>
+                    {link ? (
+                      getDisplayTitle(item.title)
+                    ) : (
+                      <NavLink
+                        to={item.path}
+                        exact={!(item.children && item.children.length)}
+                      >
+                        {getDisplayTitle(item.title)}
+                      </NavLink>
+                    )}
                   </Menu.Item>
                 );
               })}
