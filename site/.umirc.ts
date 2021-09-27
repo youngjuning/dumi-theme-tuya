@@ -57,7 +57,6 @@ export default defineConfig({
     passivePreview: true,
   },
   hash: isProd,
-  base: isProd ? '/dumi-theme-tuya' : '/', // router base
   publicPath: isProd
     ? '//cdn.jsdelivr.net/gh/youngjuning/dumi-theme-tuya@gh-pages/'
     : '/',
