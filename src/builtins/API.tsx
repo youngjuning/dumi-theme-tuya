@@ -89,6 +89,14 @@ const TuyaAPI = ({ name }) => {
   );
 }
 
+const cleanAPIData = (def: ReturnType<typeof useApiData>['_']) => {
+  const { locale } = useContext(context)
+  if (def) {
+    return def.filter(item => !!item[`description.${locale}`])
+  }
+  return []
+}
+
 const API = ({ identifier, export: expt }: IApiComponentProps) => {
   const data = useApiData(identifier);
   const { locale } = useContext(context);
@@ -120,7 +128,7 @@ const API = ({ identifier, export: expt }: IApiComponentProps) => {
             </tr>
           </thead>
           <tbody>
-            {getArray(data[expt]).map(row => (
+            {cleanAPIData(getArray(data[expt])).map(row => (
               <tr key={row.identifier}>
                 <td className="col-0" dangerouslySetInnerHTML={{ __html: row.identifier }}></td>
                 <td className="col-1" dangerouslySetInnerHTML={{ __html: row.description || '--' }} ></td>
