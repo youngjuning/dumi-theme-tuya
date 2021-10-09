@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.0](https://github.com/youngjuning/dumi-theme-tuya/compare/v2.4.0...v2.5.0) (2021-10-09)
+
+
+### Features
+
+* clear api data ([3581d70](https://github.com/youngjuning/dumi-theme-tuya/commit/3581d7072efe46b0c03d8186ec1857817946a41d))
+
 ## [2.4.0](https://github.com/youngjuning/dumi-theme-tuya/compare/v2.3.1...v2.4.0) (2021-09-26)
 
 
