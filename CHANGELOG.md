@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.7.0](https://github.com/youngjuning/dumi-theme-tuya/compare/v2.6.0...v2.7.0) (2021-10-11)
+
+
+### Features
+
+* render key ([d712fa6](https://github.com/youngjuning/dumi-theme-tuya/commit/d712fa62ed2e48877445fe9bc48820efdbe92d12))
+
 ## [2.6.0](https://github.com/youngjuning/dumi-theme-tuya/compare/v2.5.0...v2.6.0) (2021-10-11)
 
 
