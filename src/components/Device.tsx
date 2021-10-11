@@ -67,6 +67,15 @@ const Device: FC<IDeviceProps> = ({
     }
   }, [url, fixLocales, locales, urlLocaleKey])
 
+  useEffect(() => {
+    // export api
+    window['__Device__'] = {
+      refresh() {
+        setRenderKey(Math.random())
+      }
+    }
+  }, [])
+
   return (
     <div
       className={['__dumi-default-device'].concat(className).join(' ')}
