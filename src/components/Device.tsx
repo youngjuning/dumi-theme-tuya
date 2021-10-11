@@ -70,8 +70,8 @@ const Device: FC<IDeviceProps> = ({
   useEffect(() => {
     // export api
     window['__Device__'] = {
-      refresh() {
-        setRenderKey(Math.random())
+      refresh(key = Math.random()) {
+        setRenderKey(key)
       }
     }
   }, [])
