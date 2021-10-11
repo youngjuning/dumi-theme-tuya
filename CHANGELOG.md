@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.6.0](https://github.com/youngjuning/dumi-theme-tuya/compare/v2.5.0...v2.6.0) (2021-10-11)
+
+
+### Features
+
+* api export ([d69541e](https://github.com/youngjuning/dumi-theme-tuya/commit/d69541e37ee8dd62629f4c08984dc09fec253209))
+
 ## [2.5.0](https://github.com/youngjuning/dumi-theme-tuya/compare/v2.4.0...v2.5.0) (2021-10-09)
 
 
