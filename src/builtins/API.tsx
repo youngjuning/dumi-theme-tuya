@@ -128,7 +128,7 @@ const API = ({ identifier, export: expt }: IApiComponentProps) => {
             </tr>
           </thead>
           <tbody>
-            {cleanAPIData(getArray(data[expt])).map(row => (
+            {cleanAPIData(getArray(data[expt] ?? data['default'])).map(row => (
               <tr key={row.identifier}>
                 <td className="col-0" dangerouslySetInnerHTML={{ __html: row.identifier }}></td>
                 <td className="col-1" dangerouslySetInnerHTML={{ __html: row.description || '--' }} ></td>
