@@ -21,6 +21,27 @@ ul[role='slug-list'] {
 
     &[data-depth='3'] {
       padding-left: 12px;
+
+      a {
+        &::before {
+          background: @c-border;
+        }
+        &::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 12px;
+          bottom: 0;
+          display: inline-block;
+          width: 2px;
+          background: @c-border;
+        }
+        &.active {
+          &::after {
+            background: #346ae5;
+          }
+        }
+      }
     }
   }
 }

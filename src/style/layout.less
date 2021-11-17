@@ -177,13 +177,21 @@ a {
     li {
       position: relative;
       margin: 0;
-      padding: 4px 0 4px 6px;
+      padding: 8px 0 8px 6px;
       text-indent: 12px;
-      font-size: 13px;
+      font-size: 12px;
       line-height: 1.40625;
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
+
+      &[role='slug-list-title'] {
+        padding-left: 0;
+        text-align: left;
+        text-indent: 0;
+        padding-bottom: 16px;
+        font-size: 14px;
+      }
 
       a {
         color: @c-text;
